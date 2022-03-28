@@ -11,3 +11,8 @@
   top: 155px;
   right: 385px;
 }
+
+.popup__close:hover {
+  opacity: 0.6;
+  transition: opacity .5s ease-in-out;
+}

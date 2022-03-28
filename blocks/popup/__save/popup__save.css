@@ -14,4 +14,10 @@
   font-size: 18px;
   line-height: 1.22;
   text-align: center;
+  cursor: pointer;
+}
+
+.popup__save:hover {
+  opacity: 0.6;
+  transition: opacity .5s ease-in-out;
 }
