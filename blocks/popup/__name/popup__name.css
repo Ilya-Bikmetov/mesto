@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 358px;
   min-height: 27px;
-  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -10,4 +10,5 @@
   line-height: 17px;
   margin: 0;
   padding-bottom: 13px;
+  border: none;
 }

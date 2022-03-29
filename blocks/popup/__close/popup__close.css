@@ -8,8 +8,8 @@
   position: absolute;
   width: 32px;
   height: 32px;
-  top: 155px;
-  right: 385px;
+  top: -40px;
+  right: -40px;
 }
 
 .popup__close:hover {
