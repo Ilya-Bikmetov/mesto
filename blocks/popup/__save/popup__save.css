@@ -21,3 +21,13 @@
   opacity: 0.6;
   transition: opacity .5s ease-in-out;
 }
+
+@media (max-width: 535px) {
+  .popup__save {
+    max-width: 238px;
+    min-height: 46px;
+    margin: 0 auto 25px;
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}

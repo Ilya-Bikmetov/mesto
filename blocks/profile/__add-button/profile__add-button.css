@@ -5,10 +5,21 @@
   background: url("../../../images/AddButton.svg");
   background-repeat: no-repeat;
   background-size: contain;
+  border: none;
+  padding: 0;
 }
 
 .profile__add-button:hover {
   opacity: .6;
   transition: opacity .5s ease-in-out;
   cursor: pointer;
+}
+
+@media (max-width: 535px) {
+  .profile__add-button {
+  background: url("../../../images/Add_Button_mobile.svg");
+  max-width: 282px;
+  min-height: 50px;
+  margin: 36px 19px;
+  }
 }

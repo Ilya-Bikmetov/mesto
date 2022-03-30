@@ -7,3 +7,9 @@
   font-family: 'Inter', Arial, sans-serif;
   position: relative;
 }
+
+@media (max-width: 535px) {
+  .page {
+    max-width: 320px;
+  }
+}

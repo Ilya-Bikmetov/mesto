@@ -13,3 +13,10 @@
   position: relative;
   color: black;
 }
+
+@media (max-width: 535px) {
+  .popup__content {
+    max-width: 282px;
+    min-height: 322px;
+  }
+}

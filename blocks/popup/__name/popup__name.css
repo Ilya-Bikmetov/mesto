@@ -2,13 +2,19 @@
   width: 100%;
   max-width: 358px;
   min-height: 27px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 1.21;
   margin: 0;
-  padding-bottom: 13px;
-  border: none;
+  padding-bottom: 3px;
+}
+
+@media (max-width: 535px) {
+  .popup__name {
+    max-width: 238px;
+  }
 }

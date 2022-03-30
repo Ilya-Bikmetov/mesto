@@ -8,3 +8,9 @@
   left: 0;
   right: 0;
 }
+
+@media (max-width: 535px) {
+  .popup {
+    padding-top: 123px;
+  }
+}

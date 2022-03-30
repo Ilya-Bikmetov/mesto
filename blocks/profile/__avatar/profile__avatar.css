@@ -4,3 +4,10 @@
   object-fit: contain;
   margin-right: 30px;
 }
+
+@media (max-width: 535px) {
+  .profile__avatar {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+}
