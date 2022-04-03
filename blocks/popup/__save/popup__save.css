@@ -3,7 +3,6 @@
   border: none;
   border-radius: 2px;
   padding: 0;
-  margin-bottom: 37px;
   max-width: 358px;
   min-height: 50px;
   background-color: black;
@@ -15,18 +14,17 @@
   line-height: 1.22;
   text-align: center;
   cursor: pointer;
+  transition: opacity .5s ease-in-out;
 }
 
 .popup__save:hover {
   opacity: 0.6;
-  transition: opacity .5s ease-in-out;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .popup__save {
     max-width: 238px;
     min-height: 46px;
-    margin: 0 auto 25px;
     font-size: 14px;
     line-height: 1.21;
   }

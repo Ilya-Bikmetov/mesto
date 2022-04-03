@@ -9,7 +9,7 @@
   right: 0;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .popup {
     padding-top: 123px;
   }

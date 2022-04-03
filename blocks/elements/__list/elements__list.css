@@ -6,4 +6,5 @@
   padding: 0;
   row-gap: 20px;
   list-style-type: none;
+  justify-items: center;
 }

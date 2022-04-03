@@ -5,10 +5,11 @@
   background: url("../../../images/like.svg");
   background-repeat: no-repeat;
   background-size: contain;
+  border: none;
+  transition: opacity .3s ease-in-out;
 }
 
 .elements__like:hover {
-  transition: opacity .3s ease-in-out;
   opacity: 0.5;
   cursor: pointer;
 }

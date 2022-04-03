@@ -14,7 +14,7 @@
   margin-bottom: 48px;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .popup__job {
     max-width: 238px;
     margin-top: 25px;

@@ -3,7 +3,7 @@
   margin: 49px auto 0;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .elements {
     max-width: 282px;
     margin: 0 auto 0;

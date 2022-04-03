@@ -6,15 +6,17 @@
   background: url("../../../images/EditButton.svg");
   background-repeat: no-repeat;
   background-size: contain;
+  border: none;
+  padding: 0;
+  transition: opacity .5s ease-in-out;
 }
 
 .profile__edit-button:hover {
   opacity: .6;
-  transition: opacity .5s ease-in-out;
   cursor: pointer;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .profile__edit-button {
   margin-left: 10px;
   max-width: 18px;

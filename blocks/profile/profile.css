@@ -6,7 +6,7 @@
   justify-content: space-between;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .profile {
     max-width: 282px;
     margin-top: 42px;

@@ -10,11 +10,13 @@
   font-size: 14px;
   line-height: 1.21;
   margin: 0;
+  padding-top: 43px;
   padding-bottom: 3px;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .popup__name {
     max-width: 238px;
+    padding-top: 70px;
   }
 }

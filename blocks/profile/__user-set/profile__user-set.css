@@ -3,7 +3,7 @@
   align-items: center;
 }
 
-@media (max-width: 535px) {
+@media (max-width: 599px) {
   .profile__user-set {
     flex-direction: column;
   }
