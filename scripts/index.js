@@ -1,14 +1,24 @@
 const editButtonLink = document.querySelector('.profile__edit-button');
 const elementPopup = document.querySelector('.popup');
+const elementPopupAdd = document.querySelector('.popup-add')
 const closeButtonLink = document.querySelector('.popup__close');
+const popupAddСloseButton = document.querySelector('.popup-add__close');
 const elementLikeList = document.querySelectorAll('.elements__like');
+const elementAddButton = document.querySelector('.profile__add-button');
 const saveButtonLink = document.querySelector('.popup__save');
 const elementBody = document.querySelector('.root');
+const templateCard = document.querySelector('.templateCard');
+const elementsList = document.querySelector('.elements__list');
 let profileName = document.querySelector('.profile__title');
 let profileJob = document.querySelector('.profile__subtitle');
 let nameInput = document.querySelector('.popup__name');
 let jobInput = document.querySelector('.popup__job');
+let placeInput = document.querySelector('.popup-add__name');
+let imgInput = document.querySelector('.popup-add__link');
+let placeName = document.querySelector('.popup-add__name');
+let placeLink = document.querySelector('.popup-add__link');
 let formElement = document.querySelector('.popup__content');
+let formElementAdd = document.querySelector('.popup-add__content');
 
 function popupAddClass() {
   elementPopup.classList.toggle('popup_active');
@@ -17,8 +27,18 @@ function popupAddClass() {
   elementBody.classList.toggle('root_scroll');
 }
 
+function popupAddBtn() {
+  elementPopupAdd.classList.toggle('popup-add_active');
+  elementBody.classList.toggle('root_scroll');
+  placeName.value = 'Название';
+  placeLink.value = 'Ссылка на картинку';
+
+}
+
 editButtonLink.addEventListener('click', popupAddClass);
 closeButtonLink.addEventListener('click', popupAddClass);
+elementAddButton.addEventListener('click', popupAddBtn);
+popupAddСloseButton.addEventListener('click', popupAddBtn);
 
 for (let i = 0; i < elementLikeList.length; i++) {
   elementLikeList[i].addEventListener('click', function () {
@@ -33,7 +53,18 @@ function formSubmitHandler(evt) {
   popupAddClass();
 }
 
+function formCreateHandler(evt) {
+  evt.preventDefault();
+  const getElementTemplateCard = templateCard.content.cloneNode(true);
+  const title = getElementTemplateCard.querySelector('.elements__title');
+  const img = getElementTemplateCard.querySelector('.elements__photo');
+  title.textContent = placeInput.value;
+  img.src = imgInput.value;
+  elementsList.prepend(getElementTemplateCard);
+}
+
 formElement.addEventListener('submit', formSubmitHandler);
+formElementAdd.addEventListener('submit', formCreateHandler);
 
 const initialCards = [
   {
@@ -61,9 +92,6 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
-const templateCard = document.querySelector('.templateCard');
-const elementsList = document.querySelector('.elements__list');
 
 function placeCard() {
   const html = initialCards.map(getElement);

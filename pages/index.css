@@ -32,3 +32,11 @@
 @import url(../blocks/popup/__job/popup__job.css);
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__close/popup__close.css);
+@import url(../blocks/popup-add/popup-add.css);
+@import url(../blocks/popup-add/_active/popup-add_active.css);
+@import url(../blocks/popup-add/__content/popup-add__content.css);
+@import url(../blocks/popup-add/__close/popup-add__close.css);
+@import url(../blocks/popup-add/__title/popup-add__title.css);
+@import url(../blocks/popup-add/__name/popup-add__name.css);
+@import url(../blocks/popup-add/__link/popup-add__link.css);
+@import url(../blocks/popup-add/__create/popup-add__create.css);

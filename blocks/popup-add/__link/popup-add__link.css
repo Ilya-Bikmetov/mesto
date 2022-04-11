@@ -1,0 +1,27 @@
+.popup-add__link {
+  width: 100%;
+  min-height: 27px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  padding-bottom: 3px;
+  margin-top: 25px;
+  margin-bottom: 48px;
+  color: #C4C4C4;
+}
+
+.popup-add__link:focus {
+  color: black;
+}
+
+@media (max-width: 599px) {
+  .popup-add__link {
+    margin-top: 25px;
+    padding-bottom: 3px;
+    margin-bottom: 45px;
+  }
+}
