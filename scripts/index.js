@@ -3,7 +3,6 @@ const elementPopup = document.querySelector('.popup');
 const elementPopupAdd = document.querySelector('.popup-add')
 const closeButtonLink = document.querySelector('.popup__close');
 const popupAddСloseButton = document.querySelector('.popup-add__close');
-const elementLikeList = document.querySelectorAll('.elements__like');
 const elementAddButton = document.querySelector('.profile__add-button');
 const saveButtonLink = document.querySelector('.popup__save');
 const elementBody = document.querySelector('.root');
@@ -19,52 +18,6 @@ let placeName = document.querySelector('.popup-add__name');
 let placeLink = document.querySelector('.popup-add__link');
 let formElement = document.querySelector('.popup__content');
 let formElementAdd = document.querySelector('.popup-add__content');
-
-function popupAddClass() {
-  elementPopup.classList.toggle('popup_active');
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-  elementBody.classList.toggle('root_scroll');
-}
-
-function popupAddBtn() {
-  elementPopupAdd.classList.toggle('popup-add_active');
-  elementBody.classList.toggle('root_scroll');
-  placeName.value = 'Название';
-  placeLink.value = 'Ссылка на картинку';
-
-}
-
-editButtonLink.addEventListener('click', popupAddClass);
-closeButtonLink.addEventListener('click', popupAddClass);
-elementAddButton.addEventListener('click', popupAddBtn);
-popupAddСloseButton.addEventListener('click', popupAddBtn);
-
-for (let i = 0; i < elementLikeList.length; i++) {
-  elementLikeList[i].addEventListener('click', function () {
-    elementLikeList[i].classList.toggle('elements__like_active');
-  });
-}
-
-function formSubmitHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  popupAddClass();
-}
-
-function formCreateHandler(evt) {
-  evt.preventDefault();
-  const getElementTemplateCard = templateCard.content.cloneNode(true);
-  const title = getElementTemplateCard.querySelector('.elements__title');
-  const img = getElementTemplateCard.querySelector('.elements__photo');
-  title.textContent = placeInput.value;
-  img.src = imgInput.value;
-  elementsList.prepend(getElementTemplateCard);
-}
-
-formElement.addEventListener('submit', formSubmitHandler);
-formElementAdd.addEventListener('submit', formCreateHandler);
 
 const initialCards = [
   {
@@ -93,18 +46,64 @@ const initialCards = [
   }
 ];
 
+function popupAddClass() {
+  elementPopup.classList.toggle('popup_active');
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+  elementBody.classList.toggle('root_scroll');
+}
+
+function popupAddBtn() {
+  elementPopupAdd.classList.toggle('popup-add_active');
+  elementBody.classList.toggle('root_scroll');
+  placeName.value = 'Название';
+  placeLink.value = 'Ссылка на картинку';
+}
+
+editButtonLink.addEventListener('click', popupAddClass);
+closeButtonLink.addEventListener('click', popupAddClass);
+elementAddButton.addEventListener('click', popupAddBtn);
+popupAddСloseButton.addEventListener('click', popupAddBtn);
+
+function formSubmitHandler(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+  popupAddClass();
+}
+
+function formCreateHandler(evt) {
+  evt.preventDefault();
+  const getElementTemplateCard = templateCard.content.cloneNode(true);
+  const title = getElementTemplateCard.querySelector('.elements__title');
+  const img = getElementTemplateCard.querySelector('.elements__photo');
+  title.textContent = placeInput.value;
+  img.src = imgInput.value;
+  elementsList.prepend(getElementTemplateCard);
+}
+
+formElement.addEventListener('submit', formSubmitHandler);
+formElementAdd.addEventListener('submit', formCreateHandler);
+
 function placeCard() {
   const html = initialCards.map(getElement);
   elementsList.append(...html);
+}
+
+function addLike(evt) {
+  const element = evt.target.closest('.elements__like');
+  element.classList.toggle('elements__like_active');
 }
 
 function getElement(item) {
   const getElementTemplateCard = templateCard.content.cloneNode(true);
   const title = getElementTemplateCard.querySelector('.elements__title');
   const img = getElementTemplateCard.querySelector('.elements__photo');
+  const like = getElementTemplateCard.querySelector('.elements__like');
   img.src = item.link;
   img.alt = item.name;
   title.textContent = item.name;
+  like.addEventListener('click', addLike);
   return getElementTemplateCard;
 }
 
