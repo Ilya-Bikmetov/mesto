@@ -1,6 +1,7 @@
 const editButtonLink = document.querySelector('.profile__edit-button');
 const elementPopup = document.querySelector('.popup');
-const elementPopupAdd = document.querySelector('.popup-add')
+const elementPopupAdd = document.querySelector('.popup-add');
+const elementPopupImg = document.querySelector('.popup_img');
 const closeButtonLink = document.querySelector('.popup__close');
 const popupAddСloseButton = document.querySelector('.popup-add__close');
 const elementAddButton = document.querySelector('.profile__add-button');
@@ -60,6 +61,21 @@ function popupAddBtn() {
   placeLink.value = 'Ссылка на картинку';
 }
 
+function popupImg(evt) {
+  const element = evt.target.closest('.elements__photo');
+  const getElementTemplateCard = templateCard.content.cloneNode(true);
+  const title = getElementTemplateCard.querySelector('.elements__title');
+  const img = getElementTemplateCard.querySelector('.elements__photo');
+  const popupImage = document.querySelector('.popup_img');
+  const popupImageSign = document.querySelector('.popup__img-sign');
+  popupImage.src = img.src;
+  console.log(`${popupImage.src}`);
+  //popupImageSign.textContent = title.textContent;
+  popupImageSign.textContent = 'Подпись';
+  console.log(popupImageSign.textContent);
+  elementPopupImg.classList.toggle('popup_active');
+}
+
 editButtonLink.addEventListener('click', popupAddClass);
 closeButtonLink.addEventListener('click', popupAddClass);
 elementAddButton.addEventListener('click', popupAddBtn);
@@ -82,7 +98,8 @@ function formCreateHandler(evt) {
   title.textContent = placeInput.value;
   img.src = imgInput.value;
   like.addEventListener('click', addLike);
-  trash.addEventListener('click', deleteCard)
+  trash.addEventListener('click', deleteCard);
+  img.addEventListener('click', popupImg);
   elementsList.prepend(getElementTemplateCard);
 }
 
@@ -114,7 +131,8 @@ function getElement(item) {
   img.alt = item.name;
   title.textContent = item.name;
   like.addEventListener('click', addLike);
-  trash.addEventListener('click', deleteCard)
+  trash.addEventListener('click', deleteCard);
+  img.addEventListener('click', popupImg)
   return getElementTemplateCard;
 }
 

@@ -41,3 +41,6 @@
 @import url(../blocks/popup-add/__name/popup-add__name.css);
 @import url(../blocks/popup-add/__link/popup-add__link.css);
 @import url(../blocks/popup-add/__create/popup-add__create.css);
+@import url(../blocks/popup/__content-img/popup__content-img.css);
+@import url(../blocks/popup/__img/popup__img.css);
+@import url(../blocks/popup/__img-sign/popup__img-sign.css);
