@@ -77,8 +77,12 @@ function formCreateHandler(evt) {
   const getElementTemplateCard = templateCard.content.cloneNode(true);
   const title = getElementTemplateCard.querySelector('.elements__title');
   const img = getElementTemplateCard.querySelector('.elements__photo');
+  const like = getElementTemplateCard.querySelector('.elements__like');
+  const trash = getElementTemplateCard.querySelector('.elements__trash');
   title.textContent = placeInput.value;
   img.src = imgInput.value;
+  like.addEventListener('click', addLike);
+  trash.addEventListener('click', deleteCard)
   elementsList.prepend(getElementTemplateCard);
 }
 
@@ -95,15 +99,22 @@ function addLike(evt) {
   element.classList.toggle('elements__like_active');
 }
 
+function deleteCard(evt) {
+  const element = evt.target.closest('.elements__item');
+  element.remove();
+}
+
 function getElement(item) {
   const getElementTemplateCard = templateCard.content.cloneNode(true);
   const title = getElementTemplateCard.querySelector('.elements__title');
   const img = getElementTemplateCard.querySelector('.elements__photo');
   const like = getElementTemplateCard.querySelector('.elements__like');
+  const trash = getElementTemplateCard.querySelector('.elements__trash');
   img.src = item.link;
   img.alt = item.name;
   title.textContent = item.name;
   like.addEventListener('click', addLike);
+  trash.addEventListener('click', deleteCard)
   return getElementTemplateCard;
 }
 
