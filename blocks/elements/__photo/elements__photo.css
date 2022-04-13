@@ -6,3 +6,7 @@
   border-top-right-radius: 10px;
   display: block;
 }
+
+.elements__photo:hover {
+  cursor: pointer;
+}

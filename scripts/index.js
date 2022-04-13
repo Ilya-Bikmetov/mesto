@@ -1,7 +1,7 @@
 const editButtonLink = document.querySelector('.profile__edit-button');
 const elementPopup = document.querySelector('.popup');
 const elementPopupAdd = document.querySelector('.popup-add');
-const elementPopupImg = document.querySelector('.popup_img');
+const elementPopupImg = document.querySelector('.popup_pic');
 const closeButtonLink = document.querySelector('.popup__close');
 const popupAddСloseButton = document.querySelector('.popup-add__close');
 const elementAddButton = document.querySelector('.profile__add-button');
@@ -62,18 +62,19 @@ function popupAddBtn() {
 }
 
 function popupImg(evt) {
-  const element = evt.target.closest('.elements__photo');
-  const getElementTemplateCard = templateCard.content.cloneNode(true);
-  const title = getElementTemplateCard.querySelector('.elements__title');
-  const img = getElementTemplateCard.querySelector('.elements__photo');
-  const popupImage = document.querySelector('.popup_img');
+  const element = evt.target.closest('.elements__item');
+  const elementimg = element.querySelector('.elements__photo');
+  const elementtxt = element.querySelector('.elements__sign');
+  const popupImage = document.querySelector('.popup__img');
   const popupImageSign = document.querySelector('.popup__img-sign');
-  popupImage.src = img.src;
-  console.log(`${popupImage.src}`);
-  //popupImageSign.textContent = title.textContent;
-  popupImageSign.textContent = 'Подпись';
-  console.log(popupImageSign.textContent);
-  elementPopupImg.classList.toggle('popup_active');
+  const buttonClosePic = document.querySelector('.popup__close_img');
+  popupImage.src = elementimg.src;
+  popupImageSign.textContent = elementtxt.textContent;
+  elementBody.classList.add('root_scroll');
+  elementPopupImg.classList.add('popup_active');
+  buttonClosePic.addEventListener('click', function () {
+    elementPopupImg.classList.remove('popup_active');
+  });
 }
 
 editButtonLink.addEventListener('click', popupAddClass);
