@@ -8,15 +8,15 @@ const elementAddButton = document.querySelector('.profile__add-button');
 const elementBody = document.querySelector('.root');
 const templateCard = document.querySelector('.templateCard');
 const elementsList = document.querySelector('.elements__list');
-let profileName = document.querySelector('.profile__title');
-let profileJob = document.querySelector('.profile__subtitle');
-let nameInput = document.querySelector('.popup__name');
-let jobInput = document.querySelector('.popup__job');
-let placeInput = document.querySelector('.popup__name_form_add');
-let imgInput = document.querySelector('.popup__add-link');
-let placeLink = document.querySelector('.popup__add-link');
-let formElement = document.querySelector('.popup__content');
-let formElementAdd = document.querySelector('.popup__content_form_add');
+const profileName = document.querySelector('.profile__title');
+const profileJob = document.querySelector('.profile__subtitle');
+const nameInput = document.querySelector('.popup__name');
+const jobInput = document.querySelector('.popup__job');
+const placeInput = document.querySelector('.popup__name_form_add');
+const imgInput = document.querySelector('.popup__add-link');
+const placeLink = document.querySelector('.popup__add-link');
+const formElement = document.querySelector('.popup__content');
+const formElementAdd = document.querySelector('.popup__content_form_add');
 
 const initialCards = [
   {
