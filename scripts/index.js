@@ -1,11 +1,10 @@
 const editButtonLink = document.querySelector('.profile__edit-button');
 const elementPopup = document.querySelector('.popup');
-const elementPopupAdd = document.querySelector('.popup-add');
-const elementPopupImg = document.querySelector('.popup_pic');
+const elementPopupAdd = document.querySelector('.popup_place_add');
+const elementPopupImg = document.querySelector('.popup_place_img');
 const closeButtonLink = document.querySelector('.popup__close');
-const popupAddСloseButton = document.querySelector('.popup-add__close');
+const popupAddСloseButton = document.querySelector('.popup__close_form_add');
 const elementAddButton = document.querySelector('.profile__add-button');
-const saveButtonLink = document.querySelector('.popup__save');
 const elementBody = document.querySelector('.root');
 const templateCard = document.querySelector('.templateCard');
 const elementsList = document.querySelector('.elements__list');
@@ -13,12 +12,11 @@ let profileName = document.querySelector('.profile__title');
 let profileJob = document.querySelector('.profile__subtitle');
 let nameInput = document.querySelector('.popup__name');
 let jobInput = document.querySelector('.popup__job');
-let placeInput = document.querySelector('.popup-add__name');
-let imgInput = document.querySelector('.popup-add__link');
-let placeName = document.querySelector('.popup-add__name');
-let placeLink = document.querySelector('.popup-add__link');
+let placeInput = document.querySelector('.popup__name_form_add');
+let imgInput = document.querySelector('.popup__add-link');
+let placeLink = document.querySelector('.popup__add-link');
 let formElement = document.querySelector('.popup__content');
-let formElementAdd = document.querySelector('.popup-add__content');
+let formElementAdd = document.querySelector('.popup__content_form_add');
 
 const initialCards = [
   {
@@ -55,9 +53,9 @@ function popupAddClass() {
 }
 
 function popupAddBtn() {
-  elementPopupAdd.classList.toggle('popup-add_active');
+  elementPopupAdd.classList.toggle('popup_active');
   elementBody.classList.toggle('root_scroll');
-  placeName.value = 'Название';
+  placeInput.value = 'Название';
   placeLink.value = 'Ссылка на картинку';
 }
 

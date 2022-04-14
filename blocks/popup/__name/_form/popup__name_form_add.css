@@ -1,0 +1,7 @@
+.popup__name_form_add {
+  color: #C4C4C4;
+}
+
+.popup__name_form_add:focus {
+  color: black;
+}

@@ -1,5 +1,4 @@
 .popup {
-  padding-top: 195px;
   display: none;
   background-color: rgba(0, 0, 0, .5);
   position: fixed;
@@ -7,10 +6,4 @@
   bottom: 0;
   left: 0;
   right: 0;
-}
-
-@media (max-width: 599px) {
-  .popup {
-    padding-top: 123px;
-  }
 }

@@ -1,4 +1,4 @@
-.popup-add__create {
+.popup__btn {
   width: 100%;
   border: none;
   border-radius: 2px;
@@ -16,12 +16,12 @@
   transition: opacity .5s ease-in-out;
 }
 
-.popup-add__create:hover {
+.popup__btn:hover {
   opacity: 0.6;
 }
 
 @media (max-width: 599px) {
-  .popup-add__create {
+  .popup__btn {
     max-width: 238px;
     min-height: 46px;
     font-size: 14px;

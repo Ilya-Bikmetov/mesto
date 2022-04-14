@@ -1,4 +1,4 @@
-.popup-add__link {
+.popup__add-link {
   width: 100%;
   min-height: 27px;
   border: none;
@@ -14,12 +14,12 @@
   color: #C4C4C4;
 }
 
-.popup-add__link:focus {
+.popup__add-link:focus {
   color: black;
 }
 
 @media (max-width: 599px) {
-  .popup-add__link {
+  .popup__add-link {
     margin-top: 25px;
     padding-bottom: 3px;
     margin-bottom: 45px;

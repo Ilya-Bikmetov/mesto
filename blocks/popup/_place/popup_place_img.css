@@ -1,0 +1,11 @@
+.popup_place_img {
+  margin-top: 90px;
+  padding: 90 auto;
+}
+
+@media (max-width: 599px) {
+  .popup_place_img {
+    margin-top: 136px;
+  }
+}
+
