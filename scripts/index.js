@@ -65,13 +65,14 @@ function popupImg(evt) {
   const elementtxt = element.querySelector('.elements__sign');
   const popupImage = document.querySelector('.popup__img');
   const popupImageSign = document.querySelector('.popup__img-sign');
-  const buttonClosePic = document.querySelector('.popup__close_img');
+  const buttonClosePic = document.querySelector('.popup__close_form_img');
   popupImage.src = elementimg.src;
   popupImageSign.textContent = elementtxt.textContent;
   elementBody.classList.add('root_scroll');
   elementPopupImg.classList.add('popup_active');
   buttonClosePic.addEventListener('click', function () {
     elementPopupImg.classList.remove('popup_active');
+    elementBody.classList.remove('root_scroll');
   });
 }
 
