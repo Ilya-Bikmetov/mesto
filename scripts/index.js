@@ -44,11 +44,6 @@ const initialCards = [
   }
 ];
 
-function Add() {
-  elementPopupAdd.classList.toggle('popup_active');
-  elementBody.classList.toggle('root_scroll');
-}
-
 function popupAddClass() {
   elementPopup.classList.toggle('popup_active');
   nameInput.value = profileName.textContent;
@@ -57,9 +52,8 @@ function popupAddClass() {
 }
 
 function popupAddBtn() {
-  /*elementPopupAdd.classList.toggle('popup_active');
-  elementBody.classList.toggle('root_scroll');*/
-  Add();
+  elementPopupAdd.classList.toggle('popup_active');
+  elementBody.classList.toggle('root_scroll');
   placeInput.value = 'Название';
   placeLink.value = 'Ссылка на картинку';
 }
