@@ -1,5 +1,5 @@
 .popup__content-img {
-  max-width: 75vw;
+  width: fit-content;
   margin: 0 auto;
   position: relative;
 }

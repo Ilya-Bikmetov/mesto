@@ -13,7 +13,6 @@ const profileJob = document.querySelector('.profile__subtitle');
 const nameInput = document.querySelector('.popup__name');
 const jobInput = document.querySelector('.popup__job');
 const placeInput = document.querySelector('.popup__name_form_add');
-const imgInput = document.querySelector('.popup__add-link');
 const placeLink = document.querySelector('.popup__add-link');
 const formElement = document.querySelector('.popup__content');
 const formElementAdd = document.querySelector('.popup__content_form_add');
@@ -45,6 +44,11 @@ const initialCards = [
   }
 ];
 
+function Add() {
+  elementPopupAdd.classList.toggle('popup_active');
+  elementBody.classList.toggle('root_scroll');
+}
+
 function popupAddClass() {
   elementPopup.classList.toggle('popup_active');
   nameInput.value = profileName.textContent;
@@ -53,8 +57,9 @@ function popupAddClass() {
 }
 
 function popupAddBtn() {
-  elementPopupAdd.classList.toggle('popup_active');
-  elementBody.classList.toggle('root_scroll');
+  /*elementPopupAdd.classList.toggle('popup_active');
+  elementBody.classList.toggle('root_scroll');*/
+  Add();
   placeInput.value = 'Название';
   placeLink.value = 'Ссылка на картинку';
 }
@@ -96,7 +101,7 @@ function formCreateHandler(evt) {
   const like = getElementTemplateCard.querySelector('.elements__like');
   const trash = getElementTemplateCard.querySelector('.elements__trash');
   title.textContent = placeInput.value;
-  img.src = imgInput.value;
+  img.src = placeLink.value;
   like.addEventListener('click', addLike);
   trash.addEventListener('click', deleteCard);
   img.addEventListener('click', popupImg);

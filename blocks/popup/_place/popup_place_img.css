@@ -1,11 +1,10 @@
 .popup_place_img {
-  margin-top: 90px;
-  padding: 90 auto;
+  padding-top: 90px;
 }
 
 @media (max-width: 599px) {
   .popup_place_img {
-    margin-top: 136px;
+    padding-top: 136px;
   }
 }
 
