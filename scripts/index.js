@@ -66,6 +66,7 @@ function popupImg(evt) {
   const popupImageSign = document.querySelector('.popup__img-sign');
   const buttonClosePic = document.querySelector('.popup__close_form_img');
   popupImage.src = elementimg.src;
+  popupImage.alt = elementimg.alt;
   popupImageSign.textContent = elementtxt.textContent;
   elementBody.classList.add('root_scroll');
   elementPopupImg.classList.add('popup_active');
