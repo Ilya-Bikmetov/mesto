@@ -1,0 +1,20 @@
+.popup__input_addform_placename {
+  color: black;
+  margin: 0;
+  margin-top: 54px;
+  padding-bottom: 3px;
+}
+
+.popup__input_addform_placename::placeholder {
+  color: #C4C4C4;
+}
+
+.popup__input_addform_placename:focus {
+  color: black;
+}
+
+@media (max-width: 599px) {
+  .popup__input_addform_placename {
+    margin-top: 75px;
+  }
+}

@@ -1,4 +1,4 @@
-.popup__name {
+.popup__input {
   width: 100%;
   min-height: 27px;
   border: none;
@@ -8,13 +8,4 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  margin: 0;
-  margin-top: 54px;
-  padding-bottom: 3px;
-}
-
-@media (max-width: 599px) {
-  .popup__name {
-    margin-top: 75px;
-  }
 }
