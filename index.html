@@ -36,22 +36,30 @@
     </section>
 
     <div class="popup popup_place_edit">
-      <form class="popup__content" name="edit_profile">
+      <form class="popup__content" name="edit-profile">
         <button class="popup__close" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="username" class="popup__input popup__input_editform_name">
-        <input type="text" name="job_description" class="popup__input popup__input_editform_job">
+        <input type="text" name="user-name" class="popup__input popup__input_edit-form_name">
+        <input type="text" name="job-description" class="popup__input popup__input_edit-form_job">
         <button class="popup__btn" type="submit" aria-label="Сохранить">Сохранить</button>
       </form>
     </div>
 
     <div class="popup popup_place_add">
-      <form class="popup__content popup__content_form_add" name="add_place">
+      <form class="popup__content popup__content_form_add" name="add-place">
         <button class="popup__close popup__close_form_add" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="placename" class="popup__input popup__input_addform_placename" placeholder="Название"
+        <input
+          type="text"
+          name="placename"
+          class="popup__input popup__input_add-form_placename"
+          placeholder="Название"
           required>
-        <input type="url" name="img_url" class="popup__input popup__input_addform_link" placeholder="Ссылка на картинку"
+        <input
+          type="url"
+          name="img-url"
+          class="popup__input popup__input_add-form_link"
+          placeholder="Ссылка на картинку"
           required>
         <button class="popup__btn" type="submit" aria-label="Создать">Создать</button>
       </form>

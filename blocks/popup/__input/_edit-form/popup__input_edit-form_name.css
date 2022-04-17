@@ -1,11 +1,11 @@
-.popup__input_editform_name {
+.popup__input_edit-form_name {
   margin: 0;
   margin-top: 54px;
   padding-bottom: 3px;
 }
 
 @media (max-width: 599px) {
-  .popup__input_editform_name {
+  .popup__input_edit-form_name {
     margin-top: 75px;
   }
 }
