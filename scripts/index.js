@@ -48,15 +48,12 @@ function submitFormHandler(evt) {
 
 function createFormHandler(evt) {
   evt.preventDefault();
-  const elementInputCard = getElement({name: placeInput.value, link: placeLink.value});
+  const elementInputCard = getElement({ name: placeInput.value, link: placeLink.value });
   listElements.prepend(elementInputCard);
   placeInput.value = '';
   placeLink.value = '';
   closePopup(elementPopupAdd);
 }
-
-profileEditForm.addEventListener('submit', submitFormHandler);
-profileEditFormAdd.addEventListener('submit', createFormHandler);
 
 function addCards() {
   const listInitialCards = initialCards.map(getElement);
@@ -87,6 +84,8 @@ function getElement(item) {
   return cardElement;
 }
 
+profileEditForm.addEventListener('submit', submitFormHandler);
+profileEditFormAdd.addEventListener('submit', createFormHandler);
 buttonEditProfile.addEventListener('click', () => openPopup(elementPopup));
 elementAddButton.addEventListener('click', () => openPopup(elementPopupAdd));
 buttonCloseEditForm.addEventListener('click', () => {
