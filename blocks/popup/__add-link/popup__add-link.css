@@ -11,6 +11,10 @@
   padding-bottom: 3px;
   margin-top: 25px;
   margin-bottom: 48px;
+  color: black;
+}
+
+.popup__add-link::placeholder {
   color: #C4C4C4;
 }
 

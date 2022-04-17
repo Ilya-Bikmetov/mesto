@@ -1,4 +1,8 @@
 .popup__name_form_add {
+  color: black;
+}
+
+.popup__name_form_add::placeholder {
   color: #C4C4C4;
 }
 

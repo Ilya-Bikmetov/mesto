@@ -1,10 +1,3 @@
 .popup_place_img {
-  padding-top: 90px;
+  background-color: rgba(0, 0, 0, .9);
 }
-
-@media (max-width: 599px) {
-  .popup_place_img {
-    padding-top: 136px;
-  }
-}
-
