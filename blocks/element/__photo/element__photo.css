@@ -1,4 +1,4 @@
-.elements__photo {
+.element__photo {
   width: 282px;
   height: 282px;
   object-fit: cover;
@@ -7,6 +7,6 @@
   display: block;
 }
 
-.elements__photo:hover {
+.element__photo:hover {
   cursor: pointer;
 }

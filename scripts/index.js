@@ -80,20 +80,20 @@ function addCards() {
 }
 
 function addLike(evt) {
-  evt.target.classList.toggle('elements__like_active')
+  evt.target.classList.toggle('element__like_active')
 }
 
 function deleteCard(evt) {
-  const element = evt.target.closest('.elements__item');
+  const element = evt.target.closest('.element');
   element.remove();
 }
 
 function getElement(item) {
   const cardElement = templateCard.content.cloneNode(true);
-  const cardElementTitle = cardElement.querySelector('.elements__title');
-  const cardElementImage = cardElement.querySelector('.elements__photo');
-  const cardElementLike = cardElement.querySelector('.elements__like');
-  const cardElementTrash = cardElement.querySelector('.elements__trash');
+  const cardElementTitle = cardElement.querySelector('.element__title');
+  const cardElementImage = cardElement.querySelector('.element__photo');
+  const cardElementLike = cardElement.querySelector('.element__like');
+  const cardElementTrash = cardElement.querySelector('.element__trash');
   cardElementImage.src = item.link;
   cardElementImage.alt = item.name;
   cardElementTitle.textContent = item.name;
