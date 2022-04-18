@@ -19,8 +19,6 @@ const profileEditFormAdd = document.querySelector('.popup__content_form_add');
 const buttonClosePic = document.querySelector('.popup__close_form_img');
 const popupImage = document.querySelector('.popup__img');
 const popupImageSign = document.querySelector('.popup__img-sign');
-nameInput.value = profileName.textContent;
-jobInput.value = profileJob.textContent;
 
 function closePopup(elem) {
   elem.classList.remove('popup_active');
@@ -86,8 +84,12 @@ function getElement(item) {
 
 profileEditForm.addEventListener('submit', submitFormHandler);
 profileEditFormAdd.addEventListener('submit', createFormHandler);
-buttonEditProfile.addEventListener('click', () => openPopup(elementPopup));
 elementAddButton.addEventListener('click', () => openPopup(elementPopupAdd));
+buttonEditProfile.addEventListener('click', () => {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+  openPopup(elementPopup);
+});
 buttonCloseEditForm.addEventListener('click', () => {
   closePopup(elementPopup);
   nameInput.value = profileName.textContent;
