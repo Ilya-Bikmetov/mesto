@@ -20,6 +20,7 @@ const buttonClosePic = document.querySelector('.popup__close_form_img');
 const popupImage = document.querySelector('.popup__img');
 const popupImageSign = document.querySelector('.popup__img-sign');
 const popupProfileBtn = document.querySelector('.popup__btn');
+const buttonsSubmit = document.querySelectorAll('.popup__btn');
 
 function closePopup(elem) {
   elem.classList.remove('popup_active');
@@ -47,11 +48,11 @@ function submitFormHandler(evt) {
 
 function createFormHandler(evt) {
   evt.preventDefault();
-  const elementInputCard = getElement({ name: placeInput.value, link: placeLink.value });
-  listElements.prepend(elementInputCard);
-  placeInput.value = '';
-  placeLink.value = '';
-  closePopup(elementPopupAdd);
+    const elementInputCard = getElement({ name: placeInput.value, link: placeLink.value });
+    listElements.prepend(elementInputCard);
+    placeInput.value = '';
+    placeLink.value = '';
+    closePopup(elementPopupAdd);
 }
 
 function addCards() {
@@ -88,15 +89,26 @@ function resetFormFields(formElement) {
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement);
   });
+  deleteSubmitBtnDisabeld();
+}
+
+function deleteSubmitBtnDisabeld() {
+  buttonsSubmit.forEach((buttonElement) => {
+    buttonElement.classList.remove('popup__btn_disabled');
+  });
 }
 
 profileEditForm.addEventListener('submit', submitFormHandler);
 profileEditFormAdd.addEventListener('submit', createFormHandler);
-elementAddButton.addEventListener('click', () => openPopup(elementPopupAdd));
+elementAddButton.addEventListener('click', () => {
+  openPopup(elementPopupAdd);
+  toggleSubmitButton(profileEditFormAdd);
+});
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(elementPopup);
+  toggleSubmitButton(profileEditForm);
 });
 
 buttonCloseEditForm.addEventListener('click', () => {
@@ -114,7 +126,16 @@ buttonCloseAddForm.addEventListener('click', () => {
 });
 
 buttonClosePic.addEventListener('click', () => closePopup(elementPopupImg));
-setEventListeners(profileEditForm);
-setEventListeners(profileEditFormAdd);
+enableValidation(profileEditForm);
+enableValidation(profileEditFormAdd);
 
 addCards();
+
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__button',
+//   inactiveButtonClass: 'popup__button_disabled',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__error_visible'
+// });
