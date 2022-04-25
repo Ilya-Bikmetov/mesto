@@ -1,6 +1,5 @@
 .popup__input_add-form_link {
   padding-bottom: 3px;
-  margin-top: 25px;
   color: black;
 }
 
@@ -11,11 +10,3 @@
 .popup__input_add-form_link:focus {
   color: black;
 }
-
-/* @media (max-width: 599px) {
-  .popup__input_add-form_link {
-    margin-top: 25px;
-    padding-bottom: 3px;
-    margin-bottom: 45px;
-  }
-} */

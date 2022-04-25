@@ -98,23 +98,23 @@ buttonEditProfile.addEventListener('click', () => {
   jobInput.value = profileJob.textContent;
   openPopup(elementPopup);
 });
+
 buttonCloseEditForm.addEventListener('click', () => {
   closePopup(elementPopup);
   resetFormFields(profileEditForm);
-  popupProfileBtn.style.marginTop = '';
-  jobInput.style.marginTop = '';
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
+
 buttonCloseAddForm.addEventListener('click', () => {
   closePopup(elementPopupAdd);
+  resetFormFields(profileEditFormAdd);
   placeInput.value = '';
   placeLink.value = '';
 });
+
 buttonClosePic.addEventListener('click', () => closePopup(elementPopupImg));
-// nameInput.addEventListener('input', () => {
-//   isValid(profileEditForm, nameInput);
-// });
 setEventListeners(profileEditForm);
+setEventListeners(profileEditFormAdd);
 
 addCards();
