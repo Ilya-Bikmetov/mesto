@@ -1,13 +1,12 @@
 .popup__input_edit-form_job {
   padding-bottom: 3px;
   margin-top: 25px;
-  margin-bottom: 48px;
-}
+ }
 
-@media (max-width: 599px) {
+/* @media (max-width: 599px) {
   .popup__input_edit-form_job {
     margin-top: 25px;
     padding-bottom: 3px;
-    margin-bottom: 45px;
+
   }
-}
+} */
