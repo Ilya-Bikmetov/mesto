@@ -22,6 +22,24 @@ const popupImageSign = document.querySelector('.popup__img-sign');
 const popupProfileBtn = document.querySelector('.popup__btn');
 const buttonsSubmit = document.querySelectorAll('.popup__btn');
 
+const configProfileForm = {
+  formElement: profileEditForm,
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__btn_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
+const configCardAddForm = {
+  formElement: profileEditFormAdd,
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__btn_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
 function closePopup(elem) {
   elem.classList.remove('popup_active');
   elementBody.classList.remove('root_scroll');
@@ -84,10 +102,10 @@ function getElement(item) {
   return cardElement;
 }
 
-function resetFormFields(formElement) {
-  inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+function resetFormFields(config) {
+  inputList = Array.from(config.formElement.querySelectorAll(config.inputSelector));
   inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement);
+    hideInputError(config, inputElement);
   });
   deleteSubmitBtnDisabeld();
 }
@@ -102,40 +120,33 @@ profileEditForm.addEventListener('submit', submitFormHandler);
 profileEditFormAdd.addEventListener('submit', createFormHandler);
 elementAddButton.addEventListener('click', () => {
   openPopup(elementPopupAdd);
-  toggleSubmitButton(profileEditFormAdd);
+  toggleSubmitButton(configCardAddForm);
 });
+
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(elementPopup);
-  toggleSubmitButton(profileEditForm);
+  toggleSubmitButton(configProfileForm);
 });
 
 buttonCloseEditForm.addEventListener('click', () => {
   closePopup(elementPopup);
-  resetFormFields(profileEditForm);
+  resetFormFields(configProfileForm);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
 buttonCloseAddForm.addEventListener('click', () => {
   closePopup(elementPopupAdd);
-  resetFormFields(profileEditFormAdd);
+  resetFormFields(configCardAddForm);
   placeInput.value = '';
   placeLink.value = '';
 });
 
 buttonClosePic.addEventListener('click', () => closePopup(elementPopupImg));
-enableValidation(profileEditForm);
-enableValidation(profileEditFormAdd);
+
+enableValidation(configProfileForm);
+enableValidation(configCardAddForm);
 
 addCards();
-
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button',
-//   inactiveButtonClass: 'popup__button_disabled',
-//   inputErrorClass: 'popup__input_type_error',
-//   errorClass: 'popup__error_visible'
-// });

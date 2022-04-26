@@ -1,38 +1,38 @@
-const showInputError = (formElement, inputElement, errorMessage) => {
-  inputElement.classList.add('popup__input_type_error');
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  errorElement.classList.add('popup__input-error_active');
+const showInputError = (config, inputElement, errorMessage) => {
+  inputElement.classList.add(config.inputErrorClass);
+  const errorElement = config.formElement.querySelector(`#${inputElement.id}-error`);
+  errorElement.classList.add(config.errorClass);
   errorElement.textContent = errorMessage;
 }
 
-const hideInputError = (formElement, inputElement) => {
-  inputElement.classList.remove('popup__input_type_error');
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  errorElement.classList.remove('popup__input-error_active');
+const hideInputError = (config, inputElement) => {
+  inputElement.classList.remove(config.inputErrorClass);
+  const errorElement = config.formElement.querySelector(`#${inputElement.id}-error`);
+  errorElement.classList.remove(config.errorClass);
 }
 
-const isValid = (formElement, inputElement) => {
+const isValid = (config, inputElement) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(config, inputElement, inputElement.validationMessage);
   }
   else {
-    hideInputError(formElement, inputElement);
+    hideInputError(config, inputElement);
   }
 }
 
-const toggleSubmitButton = (formElement) => {
+const toggleSubmitButton = (config) => {
   buttonsSubmit.forEach((buttonElement) => {
-  buttonElement.disabled = !formElement.checkValidity();
-  buttonElement.classList.toggle('popup__btn_disabled', !formElement.checkValidity());
+  buttonElement.disabled = !config.formElement.checkValidity();
+  buttonElement.classList.toggle(config.inactiveButtonClass, !config.formElement.checkValidity());
   });
 }
 
-const enableValidation = (formElement) => {
-  inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+const enableValidation = (config) => {
+  inputList = Array.from(config.formElement.querySelectorAll(config.inputSelector));
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement);
-      toggleSubmitButton(formElement);
+      isValid(config, inputElement);
+      toggleSubmitButton(config);
     });
   });
 }
