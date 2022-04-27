@@ -21,6 +21,7 @@ const popupImage = document.querySelector('.popup__img');
 const popupImageSign = document.querySelector('.popup__img-sign');
 const popupProfileBtn = document.querySelector('.popup__btn');
 const buttonsSubmit = document.querySelectorAll('.popup__btn');
+const popupElements = document.querySelectorAll('.popup');
 
 const configProfileForm = {
   formElement: profileEditForm,
@@ -66,11 +67,11 @@ function submitFormHandler(evt) {
 
 function createFormHandler(evt) {
   evt.preventDefault();
-    const elementInputCard = getElement({ name: placeInput.value, link: placeLink.value });
-    listElements.prepend(elementInputCard);
-    placeInput.value = '';
-    placeLink.value = '';
-    closePopup(elementPopupAdd);
+  const elementInputCard = getElement({ name: placeInput.value, link: placeLink.value });
+  listElements.prepend(elementInputCard);
+  placeInput.value = '';
+  placeLink.value = '';
+  closePopup(elementPopupAdd);
 }
 
 function addCards() {
@@ -145,6 +146,23 @@ buttonCloseAddForm.addEventListener('click', () => {
 });
 
 buttonClosePic.addEventListener('click', () => closePopup(elementPopupImg));
+popupElements.forEach((popupElement) => {
+  popupElement.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    }
+  });
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    closePopNew();
+  }
+});
+function closePopNew() {
+  document.querySelector('.popup_active').classList.remove('popup_active');
+}
+
 
 enableValidation(configProfileForm);
 enableValidation(configCardAddForm);
