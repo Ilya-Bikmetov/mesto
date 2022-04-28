@@ -43,3 +43,14 @@ const enableValidation = (config) => {
     setEventListeners(config, formElement);
   });
 }
+
+const resetFormFields = (formElement) => {
+  inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  inputList.forEach((inputElement) => {
+    hideInputError('popup__input_type_error', 'popup__input-error_active', inputElement, formElement);
+  });
+  deleteSubmitBtnDisabeld();
+  if (formElement.classList.contains('popup__content_form_add')) {
+    profileEditFormAdd.reset();
+  }
+}
