@@ -36,6 +36,9 @@ function closePopup(popup) {
   popup.classList.remove('popup_active');
   elementBody.classList.remove('root_scroll');
   document.removeEventListener('keydown', setEscHandler);
+  if (popup !== elementPopupImg) {
+    resetFormFields(popup.querySelector('.popup__content'));
+  }
 }
 
 function openPopup(popup) {
@@ -105,9 +108,6 @@ function setEscHandler(evt) {
   if (evt.key === 'Escape') {
     const popupActive = document.querySelector('.popup_active');
     closePopup(popupActive);
-    if (popupActive !== elementPopupImg) {
-      resetFormFields(popupActive.querySelector('.popup__content'));
-    }
   }
 }
 
@@ -129,9 +129,6 @@ popups.forEach((popupElement) => {
   popupElement.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
       closePopup(popupElement);
-      if (popupElement !== elementPopupImg) {
-        resetFormFields(popupElement.querySelector('.popup__content'));
-      }
     }
   });
 });
