@@ -126,7 +126,7 @@ buttonEditProfile.addEventListener('click', () => {
 });
 
 popups.forEach((popupElement) => {
-  popupElement.addEventListener('click', (evt) => {
+  popupElement.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
       closePopup(popupElement);
     }
