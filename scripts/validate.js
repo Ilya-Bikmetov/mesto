@@ -1,3 +1,5 @@
+import {buttonsSubmit, deleteSubmitBtnDisabeld, profileEditFormAdd} from "./index.js"
+export {enableValidation, resetFormFields, toggleSubmitButton}
 const showInputError = (config, inputElement, formElement, errorMessage) => {
   inputElement.classList.add(config.inputErrorClass);
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
@@ -28,7 +30,7 @@ const toggleSubmitButton = (inactiveButtonClass, formElement) => {
 }
 
 const setEventListeners = (config, formElement) => {
-  inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       isValid(config, inputElement, formElement);
@@ -45,7 +47,7 @@ const enableValidation = (config) => {
 }
 
 const resetFormFields = (formElement) => {
-  inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
   inputList.forEach((inputElement) => {
     hideInputError('popup__input_type_error', 'popup__input-error_active', inputElement, formElement);
   });
