@@ -1,7 +1,6 @@
 import { buttonsSubmit, profileEditFormAdd, deleteSubmitBtnDisabeld } from "./index.js"
 export class FormValidator {
   constructor(formConfig, formElement) {
-    this._formSelector = formConfig.formSelector;
     this._inputSelector = formConfig.inputSelector;
     this._submitButtonSelector = formConfig._submitButtonSelector;
     this._inactiveButtonClass = formConfig.inactiveButtonClass;
@@ -13,7 +12,6 @@ export class FormValidator {
   enableValidation() {
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._inputList.forEach((inputElement) => {
-      // this._inputElement = inputElement;
       inputElement.addEventListener('input', () => {
         this._inputElement = inputElement;
         this._isValid();
@@ -52,17 +50,14 @@ export class FormValidator {
   }
 
   resetFormFields() {
-    // const inputList = Array.from(this._formElement.querySelectorAll('.popup__input'));
-    // this._inputList.forEach((inputElement) => {
-    //   this._inputElement = inputElement;
-    //   this._hideInputError();
-    // });
-    this._hideInputError();
+    this._inputList.forEach((inputElement) => {
+      this._inputElement = inputElement;
+      this._hideInputError();
+    });
+
     deleteSubmitBtnDisabeld();
     if (this._formElement.classList.contains('popup__content_form_add')) {
       profileEditFormAdd.reset();
     }
   }
-
-
 }
