@@ -1,6 +1,6 @@
-import {enableValidation, resetFormFields, toggleSubmitButton} from "./validate.js"
+// import {enableValidation, resetFormFields, toggleSubmitButton} from "./validate.js"
 import {Card} from "./card.js"
-
+import {FormValidator} from "./formValidator.js"
 export {popupImage, popupImageSign, elementPopupImg, buttonsSubmit, profileEditFormAdd, openPopup, deleteSubmitBtnDisabeld}
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const elementPopupEdit = document.querySelector('.popup_place_edit');
@@ -40,8 +40,15 @@ function closePopup(popup) {
   popup.classList.remove('popup_active');
   elementBody.classList.remove('root_scroll');
   document.removeEventListener('keydown', setEscHandler);
-  if (popup !== elementPopupImg) {
-    resetFormFields(popup.querySelector('.popup__content'));
+  // if (popup !== elementPopupImg) {
+  //   resetFormFields(popup.querySelector('.popup__content'));
+  // }
+  if (popup == elementPopupEdit) {
+    formEdit.resetFormFields();
+  }
+
+  if (popup == elementPopupAdd) {
+    formAdd.resetFormFields();
   }
 }
 
@@ -125,14 +132,16 @@ profileEditForm.addEventListener('submit', submitEditFormHandler);
 profileEditFormAdd.addEventListener('submit', addCardFormHandler);
 elementAddButton.addEventListener('click', () => {
   openPopup(elementPopupAdd);
-  toggleSubmitButton('popup__btn_disabled', profileEditFormAdd);
+  // toggleSubmitButton('popup__btn_disabled', profileEditFormAdd);
+  formAdd.toggleSubmitButton();
 });
 
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(elementPopupEdit);
-  toggleSubmitButton('popup__btn_disabled', profileEditForm);
+  // toggleSubmitButton('popup__btn_disabled', profileEditForm);
+  formEdit.toggleSubmitButton();
 });
 
 popups.forEach((popupElement) => {
@@ -143,7 +152,12 @@ popups.forEach((popupElement) => {
   });
 });
 
-enableValidation(formConfig);
+// enableValidation(formConfig);
+const formEdit = new FormValidator(formConfig, profileEditForm);
+formEdit.enableValidation();
+
+const formAdd = new FormValidator(formConfig, profileEditFormAdd);
+formAdd.enableValidation();
 
 addCards();
 
