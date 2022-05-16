@@ -1,4 +1,5 @@
-import {popupImage, popupImageSign, elementPopupImg, openPopup} from "./index.js"
+import { openPopupImg } from "./utils.js"
+
 export class Card {
   constructor(cardData, cardSelector) {
     this._name = cardData.name;
@@ -8,10 +9,10 @@ export class Card {
 
   generateCard() {
     this._cardElement = document
-    .querySelector(this._cardSelector)
-    .content
-    .querySelector('.element')
-    .cloneNode(true);
+      .querySelector(this._cardSelector)
+      .content
+      .querySelector('.element')
+      .cloneNode(true);
     this._photo = this._cardElement.querySelector('.element__photo');
     this._title = this._cardElement.querySelector('.element__title');
     this._photo.src = this._link;
@@ -25,14 +26,7 @@ export class Card {
   _setEventListeners() {
     this._cardElement.querySelector('.element__like').addEventListener('click', this._toggleLike);
     this._cardElement.querySelector('.element__trash').addEventListener('click', () => this._deleteCard());
-    this._photo.addEventListener('click', () => this._openPopupImg());
-  }
-
-  _openPopupImg() {
-    popupImage.src = this._link;
-    popupImage.alt = this._name;
-    popupImageSign.textContent = this._name;
-    openPopup(elementPopupImg);
+    this._photo.addEventListener('click', () => openPopupImg(this._link, this._name));
   }
 
   _toggleLike(evt) {
@@ -44,4 +38,3 @@ export class Card {
   }
 
 }
-

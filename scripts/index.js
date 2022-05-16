@@ -1,13 +1,14 @@
 import { Card } from "./card.js"
 import { FormValidator } from "./formValidator.js"
-export { popupImage, popupImageSign, elementPopupImg, buttonsSubmit, profileEditFormAdd, openPopup, deleteSubmitBtnDisabeld }
+export { openPopup }
 
+const elementBody = document.querySelector('.root');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const elementPopupEdit = document.querySelector('.popup_place_edit');
 const elementPopupAdd = document.querySelector('.popup_place_add');
 const elementPopupImg = document.querySelector('.popup_place_img');
 const elementAddButton = document.querySelector('.profile__add-button');
-const elementBody = document.querySelector('.root');
+
 const listCards = document.querySelector('.elements__list');
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
@@ -19,13 +20,12 @@ const profileEditForm = document.querySelector('.popup__content');
 const profileEditFormAdd = document.querySelector('.popup__content_form_add');
 const popupImage = document.querySelector('.popup__img');
 const popupImageSign = document.querySelector('.popup__img-sign');
-const buttonsSubmit = document.querySelectorAll('.popup__btn');
 const popups = document.querySelectorAll('.popup');
 
 const formConfig = {
   formSelector: '.popup__content',
   inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
+  submitButtonSelector: '.popup__btn',
   inactiveButtonClass: 'popup__btn_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
@@ -35,21 +35,20 @@ function closePopup(popup) {
   popup.classList.remove('popup_active');
   elementBody.classList.remove('root_scroll');
   document.removeEventListener('keydown', setEscHandler);
-
-  if (popup == elementPopupEdit) {
-    formEdit.resetFormFields();
-  }
-
-  if (popup == elementPopupAdd) {
-    formAdd.resetFormFields();
-  }
 }
 
 function openPopup(popup) {
   popup.classList.add('popup_active');
   elementBody.classList.add('root_scroll');
   document.addEventListener('keydown', setEscHandler);
+  if (popup == elementPopupEdit)
+    formEdit.resetFormFields();
+  if (popup == elementPopupAdd) {
+    formAdd.resetFormFields();
+    profileEditFormAdd.reset();
+  }
 }
+
 
 function submitEditFormHandler(evt) {
   evt.preventDefault();
@@ -58,25 +57,20 @@ function submitEditFormHandler(evt) {
   closePopup(elementPopupEdit);
 }
 
+function createCard(cardData, cardSelector) {
+  const card = new Card(cardData, cardSelector);
+  return card.generateCard();
+}
+
 function addCardFormHandler(evt) {
   evt.preventDefault();
-  const elementInputCard = new Card({ name: placeInput.value, link: placeLink.value }, '#template-сard');
-  listCards.prepend(elementInputCard.generateCard());
+  listCards.prepend(createCard({ name: placeInput.value, link: placeLink.value }, '#template-сard'));
   profileEditFormAdd.reset();
   closePopup(elementPopupAdd);
 }
 
 function addCards() {
-  initialCards.forEach((cardData) => {
-    const card = new Card(cardData, '#template-сard');
-    listCards.append(card.generateCard());
-  });
-}
-
-function deleteSubmitBtnDisabeld() {
-  buttonsSubmit.forEach((buttonElement) => {
-    buttonElement.classList.remove('popup__btn_disabled');
-  });
+  initialCards.forEach((cardData) => listCards.append(createCard(cardData, '#template-сard')));
 }
 
 function setEscHandler(evt) {

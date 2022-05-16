@@ -1,12 +1,13 @@
-import { buttonsSubmit, profileEditFormAdd, deleteSubmitBtnDisabeld } from "./index.js"
 export class FormValidator {
   constructor(formConfig, formElement) {
+    this._formSelector = formConfig.formSelector;
     this._inputSelector = formConfig.inputSelector;
-    this._submitButtonSelector = formConfig._submitButtonSelector;
+    this._submitButtonSelector = formConfig.submitButtonSelector;
     this._inactiveButtonClass = formConfig.inactiveButtonClass;
     this._inputErrorClass = formConfig.inputErrorClass;
     this._errorClass = formConfig.errorClass;
     this._formElement = formElement;
+    this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   enableValidation() {
@@ -43,10 +44,8 @@ export class FormValidator {
   }
 
   toggleSubmitButton() {
-    buttonsSubmit.forEach((buttonElement) => {
-      buttonElement.disabled = !this._formElement.checkValidity();
-      buttonElement.classList.toggle(this._inactiveButtonClass, !this._formElement.checkValidity());
-    });
+    this._submitButton.disabled = !this._formElement.checkValidity();
+    this._submitButton.classList.toggle(this._inactiveButtonClass, !this._formElement.checkValidity());
   }
 
   resetFormFields() {
@@ -54,10 +53,6 @@ export class FormValidator {
       this._inputElement = inputElement;
       this._hideInputError();
     });
-
-    deleteSubmitBtnDisabeld();
-    if (this._formElement.classList.contains('popup__content_form_add')) {
-      profileEditFormAdd.reset();
-    }
+    this._submitButton.classList.remove('popup__btn_disabled');
   }
 }
