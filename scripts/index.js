@@ -6,9 +6,7 @@ const elementBody = document.querySelector('.root');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const elementPopupEdit = document.querySelector('.popup_place_edit');
 const elementPopupAdd = document.querySelector('.popup_place_add');
-const elementPopupImg = document.querySelector('.popup_place_img');
 const elementAddButton = document.querySelector('.profile__add-button');
-
 const listCards = document.querySelector('.elements__list');
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
@@ -18,8 +16,6 @@ const placeInput = document.querySelector('.popup__input_add-form_placename');
 const placeLink = document.querySelector('.popup__input_add-form_link');
 const profileEditForm = document.querySelector('.popup__content');
 const profileEditFormAdd = document.querySelector('.popup__content_form_add');
-const popupImage = document.querySelector('.popup__img');
-const popupImageSign = document.querySelector('.popup__img-sign');
 const popups = document.querySelectorAll('.popup');
 
 const formConfig = {
@@ -48,7 +44,6 @@ function openPopup(popup) {
     profileEditFormAdd.reset();
   }
 }
-
 
 function submitEditFormHandler(evt) {
   evt.preventDefault();
