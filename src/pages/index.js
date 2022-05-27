@@ -1,5 +1,5 @@
-import { Card } from "./card.js"
-import { FormValidator } from "./formValidator.js"
+import { Card } from "../scripts/components/Card.js"
+import { FormValidator } from "../scripts/components/FormValidator.js"
 export { openPopup }
 
 const elementBody = document.querySelector('.root');
