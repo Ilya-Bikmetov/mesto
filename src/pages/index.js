@@ -1,31 +1,25 @@
-import { Card } from "../scripts/components/Card.js"
-import { FormValidator } from "../scripts/components/FormValidator.js"
+import { Card } from "../scripts/components/Card.js";
+import { FormValidator } from "../scripts/components/FormValidator.js";
+import {
+  initialCards,
+  formConfig,
+  elementBody,
+  buttonEditProfile,
+  elementPopupEdit,
+  elementPopupAdd,
+  elementAddButton,
+  listCards,
+  profileName,
+  profileJob,
+  nameInput,
+  jobInput,
+  placeInput,
+  placeLink,
+  profileEditForm,
+  profileEditFormAdd,
+  popups
+} from "../scripts/utils/constants.js";
 export { openPopup }
-
-const elementBody = document.querySelector('.root');
-const buttonEditProfile = document.querySelector('.profile__edit-button');
-const elementPopupEdit = document.querySelector('.popup_place_edit');
-const elementPopupAdd = document.querySelector('.popup_place_add');
-const elementAddButton = document.querySelector('.profile__add-button');
-const listCards = document.querySelector('.elements__list');
-const profileName = document.querySelector('.profile__title');
-const profileJob = document.querySelector('.profile__subtitle');
-const nameInput = document.querySelector('.popup__input_edit-form_name');
-const jobInput = document.querySelector('.popup__input_edit-form_job');
-const placeInput = document.querySelector('.popup__input_add-form_placename');
-const placeLink = document.querySelector('.popup__input_add-form_link');
-const profileEditForm = document.querySelector('.popup__content');
-const profileEditFormAdd = document.querySelector('.popup__content_form_add');
-const popups = document.querySelectorAll('.popup');
-
-const formConfig = {
-  formSelector: '.popup__content',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__btn',
-  inactiveButtonClass: 'popup__btn_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-};
 
 function closePopup(popup) {
   popup.classList.remove('popup_active');

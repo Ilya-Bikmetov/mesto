@@ -1,9 +1,6 @@
 import { openPopup } from "../../pages/index.js";
 export { openPopupImg }
-
-const popupImage = document.querySelector('.popup__img');
-const popupImageSign = document.querySelector('.popup__img-sign');
-const elementPopupImg = document.querySelector('.popup_place_img');
+import { popupImage, popupImageSign, elementPopupImg } from "./constants.js";
 
 function openPopupImg(link, name) {
   popupImage.src = link;
