@@ -1,5 +1,6 @@
-import { Card } from "../scripts/components/Card.js";
+import { createCard } from "../scripts/components/Card.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
+import { Section } from "../scripts/components/Section.js";
 import {
   initialCards,
   formConfig,
@@ -8,7 +9,6 @@ import {
   elementPopupEdit,
   elementPopupAdd,
   elementAddButton,
-  listCards,
   profileName,
   profileJob,
   nameInput,
@@ -17,7 +17,8 @@ import {
   placeLink,
   profileEditForm,
   profileEditFormAdd,
-  popups
+  popups,
+  cardListSelector
 } from "../scripts/utils/constants.js";
 export { openPopup }
 
@@ -46,20 +47,20 @@ function submitEditFormHandler(evt) {
   closePopup(elementPopupEdit);
 }
 
-function createCard(cardData, cardSelector) {
-  const card = new Card(cardData, cardSelector);
-  return card.generateCard();
-}
-
 function addCardFormHandler(evt) {
   evt.preventDefault();
-  listCards.prepend(createCard({ name: placeInput.value, link: placeLink.value }, '#template-сard'));
+  const oneCard = new Section({
+    items: [{ name: placeInput.value, link: placeLink.value }],
+    renderer: (item) => {
+      const cardElement = createCard(item, '#template-сard');
+      oneCard.addItem(cardElement, 'start');
+    },
+  },
+    cardListSelector
+  );
+  oneCard.renderItems();
   profileEditFormAdd.reset();
   closePopup(elementPopupAdd);
-}
-
-function addCards() {
-  initialCards.forEach((cardData) => listCards.append(createCard(cardData, '#template-сard')));
 }
 
 function setEscHandler(evt) {
@@ -91,11 +92,21 @@ popups.forEach((popupElement) => {
   });
 });
 
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const cardElement = createCard(item, '#template-сard');
+    cardList.addItem(cardElement, 'end');
+  },
+},
+  cardListSelector
+);
+cardList.renderItems();
+
 const formEdit = new FormValidator(formConfig, profileEditForm);
 formEdit.enableValidation();
 
 const formAdd = new FormValidator(formConfig, profileEditFormAdd);
 formAdd.enableValidation();
 
-addCards();
 

@@ -39,7 +39,6 @@ export const buttonEditProfile = document.querySelector('.profile__edit-button')
 export const elementPopupEdit = document.querySelector('.popup_place_edit');
 export const elementPopupAdd = document.querySelector('.popup_place_add');
 export const elementAddButton = document.querySelector('.profile__add-button');
-export const listCards = document.querySelector('.elements__list');
 export const profileName = document.querySelector('.profile__title');
 export const profileJob = document.querySelector('.profile__subtitle');
 export const nameInput = document.querySelector('.popup__input_edit-form_name');
@@ -49,6 +48,7 @@ export const placeLink = document.querySelector('.popup__input_add-form_link');
 export const profileEditForm = document.querySelector('.popup__content');
 export const profileEditFormAdd = document.querySelector('.popup__content_form_add');
 export const popups = document.querySelectorAll('.popup');
+export const cardListSelector = '.elements__list';
 
 export const popupImage = document.querySelector('.popup__img');
 export const popupImageSign = document.querySelector('.popup__img-sign');

@@ -1,6 +1,6 @@
 import { openPopupImg } from "../utils/utils.js"
 
-export class Card {
+class Card {
   constructor(cardData, cardSelector) {
     this._name = cardData.name;
     this._link = cardData.link;
@@ -37,4 +37,9 @@ export class Card {
     this._cardElement.remove();
   }
 
+}
+
+export function createCard(cardData, cardSelector) {
+  const card = new Card(cardData, cardSelector);
+  return card.generateCard();
 }
