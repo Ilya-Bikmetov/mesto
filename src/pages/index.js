@@ -1,5 +1,7 @@
 import { createCard } from "../scripts/components/Card.js";
+import { submitEditFormHandler } from "../scripts/utils/utils.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
+import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { Section } from "../scripts/components/Section.js";
 import {
   initialCards,
@@ -40,12 +42,12 @@ import {
 //   }
 // }
 
-function submitEditFormHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(elementPopupEdit);
-}
+// function submitEditFormHandler(evt) {
+//   evt.preventDefault();
+//   profileName.textContent = nameInput.value;
+//   profileJob.textContent = jobInput.value;
+//   popupProfile.close();
+// }
 
 function addCardFormHandler(evt) {
   evt.preventDefault();
@@ -59,8 +61,9 @@ function addCardFormHandler(evt) {
     cardListSelector
   );
   oneCard.renderItems();
-  profileEditFormAdd.reset();
-  closePopup(elementPopupAdd);
+  popupAddCard.close();
+  // profileEditFormAdd.reset();
+  // closePopup(elementPopupAdd);
 }
 
 // function setEscHandler(evt) {
@@ -70,17 +73,27 @@ function addCardFormHandler(evt) {
 //   }
 // }
 
-profileEditForm.addEventListener('submit', submitEditFormHandler);
-profileEditFormAdd.addEventListener('submit', addCardFormHandler);
+// profileEditForm.addEventListener('submit', submitEditFormHandler);
+// profileEditFormAdd.addEventListener('submit', addCardFormHandler);
+
+const popupAddCard = new PopupWithForm('.popup_place_add', addCardFormHandler);
+
 elementAddButton.addEventListener('click', () => {
-  openPopup(elementPopupAdd);
+  popupAddCard.open();
+  // openPopup(elementPopupAdd);
+  formAdd.resetFormFields();
   formAdd.toggleSubmitButton();
 });
+
+export const popupProfile = new PopupWithForm('.popup_place_edit', submitEditFormHandler);
 
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  openPopup(elementPopupEdit);
+  popupProfile.open();
+  popupProfile.setEventListeners();
+  // openPopup(elementPopupEdit);
+  formEdit.resetFormFields();
   formEdit.toggleSubmitButton();
 });
 
