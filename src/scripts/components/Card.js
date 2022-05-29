@@ -1,4 +1,4 @@
-import { openPopupImg } from "../utils/utils.js"
+import { handleCardClick } from "../utils/utils.js"
 
 class Card {
   constructor(cardData, cardSelector) {
@@ -26,7 +26,7 @@ class Card {
   _setEventListeners() {
     this._cardElement.querySelector('.element__like').addEventListener('click', this._toggleLike);
     this._cardElement.querySelector('.element__trash').addEventListener('click', () => this._deleteCard());
-    this._photo.addEventListener('click', () => openPopupImg(this._link, this._name));
+    this._photo.addEventListener('click', () => handleCardClick(this._link, this._name));
   }
 
   _toggleLike(evt) {

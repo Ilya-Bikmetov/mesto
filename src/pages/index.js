@@ -20,25 +20,25 @@ import {
   popups,
   cardListSelector
 } from "../scripts/utils/constants.js";
-export { openPopup }
+// export { openPopup }
 
-function closePopup(popup) {
-  popup.classList.remove('popup_active');
-  elementBody.classList.remove('root_scroll');
-  document.removeEventListener('keydown', setEscHandler);
-}
+// function closePopup(popup) {
+//   popup.classList.remove('popup_active');
+//   elementBody.classList.remove('root_scroll');
+//   document.removeEventListener('keydown', setEscHandler);
+// }
 
-function openPopup(popup) {
-  popup.classList.add('popup_active');
-  elementBody.classList.add('root_scroll');
-  document.addEventListener('keydown', setEscHandler);
-  if (popup == elementPopupEdit)
-    formEdit.resetFormFields();
-  if (popup == elementPopupAdd) {
-    formAdd.resetFormFields();
-    profileEditFormAdd.reset();
-  }
-}
+// function openPopup(popup) {
+//   popup.classList.add('popup_active');
+//   elementBody.classList.add('root_scroll');
+//   document.addEventListener('keydown', setEscHandler);
+//   if (popup == elementPopupEdit)
+//     formEdit.resetFormFields();
+//   if (popup == elementPopupAdd) {
+//     formAdd.resetFormFields();
+//     profileEditFormAdd.reset();
+//   }
+// }
 
 function submitEditFormHandler(evt) {
   evt.preventDefault();
@@ -63,12 +63,12 @@ function addCardFormHandler(evt) {
   closePopup(elementPopupAdd);
 }
 
-function setEscHandler(evt) {
-  if (evt.key === 'Escape') {
-    const popupActive = document.querySelector('.popup_active');
-    closePopup(popupActive);
-  }
-}
+// function setEscHandler(evt) {
+//   if (evt.key === 'Escape') {
+//     const popupActive = document.querySelector('.popup_active');
+//     closePopup(popupActive);
+//   }
+// }
 
 profileEditForm.addEventListener('submit', submitEditFormHandler);
 profileEditFormAdd.addEventListener('submit', addCardFormHandler);
@@ -84,13 +84,13 @@ buttonEditProfile.addEventListener('click', () => {
   formEdit.toggleSubmitButton();
 });
 
-popups.forEach((popupElement) => {
-  popupElement.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-      closePopup(popupElement);
-    }
-  });
-});
+// popups.forEach((popupElement) => {
+//   popupElement.addEventListener('mousedown', (evt) => {
+//     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+//       closePopup(popupElement);
+//     }
+//   });
+// });
 
 const cardList = new Section({
   items: initialCards,
