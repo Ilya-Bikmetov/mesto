@@ -18,18 +18,18 @@ import {
   cardListSelector
 } from "../scripts/utils/constants.js";
 
-function submitEditFormHandler(evt) {
+function submitEditFormHandler(evt, inputs) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  profileName.textContent = inputs[0].value;
+  profileJob.textContent = inputs[1].value;
   popupProfile.close();
 }
 
 
-function addCardFormHandler(evt) {
+function addCardFormHandler(evt, inputs) {
   evt.preventDefault();
   const oneCard = new Section({
-    items: [{ name: placeInput.value, link: placeLink.value }],
+    items: [{ name: inputs[0].value, link: inputs[1].value }],
     renderer: (item) => {
       const cardElement = createCard(item, '#template-сard');
       oneCard.addItem(cardElement, 'start');
