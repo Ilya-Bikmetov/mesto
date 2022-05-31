@@ -28,35 +28,27 @@ function submitEditFormHandler(evt, inputs) {
 
 function addCardFormHandler(evt, inputs) {
   evt.preventDefault();
-  const oneCard = new Section({
-    items: [{ name: inputs[0].value, link: inputs[1].value }],
-    renderer: (item) => {
-      const cardElement = createCard(item, '#template-сard');
-      oneCard.addItem(cardElement, 'start');
-    },
-  },
-    cardListSelector
-  );
-  oneCard.renderItems();
+  const cardElement = createCard({ name: inputs[0].value, link: inputs[1].value }, '#template-сard')
+  cardList.addItem(cardElement, 'start');
   popupAddCard.close();
 }
 
 const popupAddCard = new PopupWithForm('.popup_place_add', addCardFormHandler);
+popupAddCard.setEventListeners();
 
 elementAddButton.addEventListener('click', () => {
   popupAddCard.open();
-  popupAddCard.setEventListeners();
   formAdd.resetFormFields();
   formAdd.toggleSubmitButton();
 });
 
 export const popupProfile = new PopupWithForm('.popup_place_edit', submitEditFormHandler);
+popupProfile.setEventListeners();
 
 buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   popupProfile.open();
-  popupProfile.setEventListeners();
   formEdit.resetFormFields();
   formEdit.toggleSubmitButton();
 });
