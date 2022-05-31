@@ -1,4 +1,4 @@
-import { handleCardClick } from "../utils/utils.js"
+import { handleCardClick } from "../utils/utils.js";
 
 class Card {
   constructor(cardData, cardSelector) {
