@@ -1,4 +1,5 @@
 import { handleCardClick } from "../utils/utils.js";
+import { cardList, popupAddCard } from "../../pages/index.js";
 
 class Card {
   constructor(cardData, cardSelector) {
@@ -42,4 +43,11 @@ class Card {
 export function createCard(cardData, cardSelector) {
   const card = new Card(cardData, cardSelector);
   return card.generateCard();
+}
+
+export function addCardFormHandler(evt, inputs) {
+  evt.preventDefault();
+  const cardElement = createCard({ name: inputs[0].value, link: inputs[1].value }, '#template-сard')
+  cardList.addItem(cardElement, 'start');
+  popupAddCard.close();
 }

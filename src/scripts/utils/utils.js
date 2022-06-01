@@ -1,6 +1,4 @@
-import { PopupWithImage } from "../components/PopupWithImage.js";
-
-const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign');
+import { popupImage } from "../../pages/index.js";
 
 export function handleCardClick(link, name) {
   popupImage.open(link, name);
