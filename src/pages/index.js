@@ -1,3 +1,4 @@
+import "./index.css";
 import { createCard } from "../scripts/components/Card.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
