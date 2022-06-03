@@ -10,6 +10,7 @@ export class Section {
   }
 
   addItem(element, position) {
+
     if (position == 'start')
       this._container.prepend(element);
     else

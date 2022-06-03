@@ -1,11 +1,9 @@
-import { handleCardClick } from "../utils/utils.js";
-import { cardList, popupAddCard } from "../../pages/index.js";
-
-class Card {
-  constructor(cardData, cardSelector) {
-    this._name = cardData.name;
-    this._link = cardData.link;
+export class Card {
+  constructor({name, link}, cardSelector, handleCardClick) {
+    this._name = name;
+    this._link = link;
     this._cardSelector = cardSelector;
+    this._openCardClick = handleCardClick;
   }
 
   generateCard() {
@@ -27,7 +25,7 @@ class Card {
   _setEventListeners() {
     this._cardElement.querySelector('.element__like').addEventListener('click', this._toggleLike);
     this._cardElement.querySelector('.element__trash').addEventListener('click', () => this._deleteCard());
-    this._photo.addEventListener('click', () => handleCardClick(this._link, this._name));
+    this._photo.addEventListener('click', () => this._openCardClick(this._link, this._name));
   }
 
   _toggleLike(evt) {
@@ -38,16 +36,4 @@ class Card {
     this._cardElement.remove();
   }
 
-}
-
-export function createCard(cardData, cardSelector) {
-  const card = new Card(cardData, cardSelector);
-  return card.generateCard();
-}
-
-export function addCardFormHandler(evt, inputs) {
-  evt.preventDefault();
-  const cardElement = createCard({ name: inputs[0].value, link: inputs[1].value }, '#template-сard')
-  cardList.addItem(cardElement, 'start');
-  popupAddCard.close();
 }

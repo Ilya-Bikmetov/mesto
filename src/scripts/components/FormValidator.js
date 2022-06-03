@@ -53,6 +53,6 @@ export class FormValidator {
       this._inputElement = inputElement;
       this._hideInputError();
     });
-    this._submitButton.classList.remove('popup__btn_disabled');
+    this.toggleSubmitButton();
   }
 }

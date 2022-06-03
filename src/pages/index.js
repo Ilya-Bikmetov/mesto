@@ -1,26 +1,30 @@
 import "./index.css";
-import { createCard } from "../scripts/components/Card.js";
+import { Card } from "../scripts/components/Card.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { Section } from "../scripts/components/Section.js";
-import { UserInfo, submitEditFormHandler } from "../scripts/components/UserInfo.js";
-import { addCardFormHandler } from "../scripts/components/Card.js";
+import { UserInfo } from "../scripts/components/UserInfo.js";
 import {
   initialCards,
   formConfig,
   buttonEditProfile,
   elementAddButton,
-  nameInput,
-  jobInput,
   profileEditForm,
   profileEditFormAdd,
   cardListSelector
 } from "../scripts/utils/constants.js";
 
-export const user = new UserInfo({ userName: '.profile__title', info: '.profile__subtitle' });
+const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign',);
+popupImage.setEventListeners();
 
-export const cardList = new Section({
+const popupProfile = new PopupWithForm('.popup_place_edit', submitEditFormHandler);
+popupProfile.setEventListeners();
+
+const popupAddCard = new PopupWithForm('.popup_place_add', handleAddCardForm);
+popupAddCard.setEventListeners();
+
+const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
     const cardElement = createCard(item, '#template-сard');
@@ -32,18 +36,33 @@ export const cardList = new Section({
 
 cardList.renderItems();
 
-export const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign');
+const user = new UserInfo({ username: '.profile__title', info: '.profile__subtitle' });
 
-export const popupAddCard = new PopupWithForm('.popup_place_add', addCardFormHandler);
-popupAddCard.setEventListeners();
+function handleAddCardForm(evt, { placename, imgLink }) {
+  evt.preventDefault();
+  const cardElement = createCard({ name: placename, link: imgLink }, '#template-сard')
+  cardList.addItem(cardElement, 'start');
+  popupAddCard.close();
+}
 
-export const popupProfile = new PopupWithForm('.popup_place_edit', submitEditFormHandler);
-popupProfile.setEventListeners();
+function submitEditFormHandler(evt, { jobInfo, username }) {
+  evt.preventDefault();
+  user.setUserInfo(username, jobInfo);
+  popupProfile.close();
+}
+
+function handleCardClick(link, name) {
+  popupImage.open(link, name);
+}
+
+function createCard(cardData, cardSelector) {
+  const card = new Card(cardData, cardSelector, handleCardClick);
+  return card.generateCard();
+}
 
 buttonEditProfile.addEventListener('click', () => {
   const currentUser = user.getUserInfo();
-  nameInput.value = currentUser.name;
-  jobInput.value = currentUser.info;
+  popupProfile.setInputValues(currentUser);
   popupProfile.open();
   formEdit.resetFormFields();
   formEdit.toggleSubmitButton();

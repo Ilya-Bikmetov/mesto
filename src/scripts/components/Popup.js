@@ -7,7 +7,6 @@ export class Popup {
 
   open() {
     this._popupElement.classList.add('popup_active');
-    elementBody.classList.add('root_scroll');
     document.addEventListener('keydown', this._handleEscClose);
   }
 
