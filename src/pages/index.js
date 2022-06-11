@@ -15,6 +15,17 @@ import {
   cardListSelector
 } from "../scripts/utils/constants.js";
 
+fetch('https://nomoreparties.co/v1/cohort-43/users/me', {
+  headers: {
+    'Authorization':'6c4179cf-c3ec-4b62-8222-3e29a4a7f86c',
+  },
+})
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
+
 const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign',);
 popupImage.setEventListeners();
 
