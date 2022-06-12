@@ -26,39 +26,52 @@ popupProfile.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_place_add', handleAddCardForm);
 popupAddCard.setEventListeners();
 
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const cardElement = createCard(item, '#template-сard');
-    cardList.addItem(cardElement, 'end');
-  },
-},
-  cardListSelector
-);
-
-cardList.renderItems();
 const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarSelector: '.profile__avatar' });
+const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
 
-const userApi = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
+api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
+  .then((obj) => {
+    const cardList = new Section({
+      items: obj,
+      renderer: (item) => {
+        const cardElement = createCard(item, '#template-сard');
+        cardList.addItem(cardElement, 'end');
+      },
+    },
+      cardListSelector
+    );
+    cardList.renderItems();
+  })
+  .catch((err) => console.log(err));
+// const cardList = new Section({
+//   items: initialCards,
+//   renderer: (item) => {
+//     const cardElement = createCard(item, '#template-сard');
+//     cardList.addItem(cardElement, 'end');
+//   },
+// },
+//   cardListSelector
+// );
 
-userApi.getUser()
+// cardList.renderItems();
+
+api.getUser()
   .then((obj) => {
     user.setUserInfo(obj.name, obj.about);
   })
   .catch((err) => console.log(err));
 
 buttonEditProfile.addEventListener('click', () => {
-  userApi.getUser()
-  .then((obj) => {
-    const currentUser = user.getUserInfo(obj.name, obj.about, obj.avatar);
-    popupProfile.setInputValues(currentUser);
-  })
-  .catch((err) => console.log(err));
+  api.getUser()
+    .then((obj) => {
+      const currentUser = user.getUserInfo(obj.name, obj.about, obj.avatar);
+      popupProfile.setInputValues(currentUser);
+    })
+    .catch((err) => console.log(err));
   popupProfile.open();
   formEdit.resetFormFields();
   formEdit.toggleSubmitButton();
 })
-
 
 function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();
@@ -69,7 +82,7 @@ function handleAddCardForm(evt, { placename, imgLink }) {
 
 function submitEditFormHandler(evt, { jobInfo, username }) {
   evt.preventDefault();
-  userApi.addUser({ about: jobInfo, name: username });
+  api.addUser({ about: jobInfo, name: username });
   user.setUserInfo(username, jobInfo);
   popupProfile.close();
 }

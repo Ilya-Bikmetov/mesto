@@ -39,5 +39,18 @@ export class Api {
       })
   }
 
+  getInitialCards(url) {
+    this._urlCards = url;
+    return fetch(this._urlCards, {
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok)
+          return res.json();
+
+        return Promise.reject(`Возникла ошибка ${res.status}`);
+      })
+  }
+
 
 }
