@@ -29,31 +29,22 @@ popupAddCard.setEventListeners();
 const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarSelector: '.profile__avatar' });
 const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
 
+const cardList = new Section({
+  items: {},
+  renderer: (item) => {
+    const cardElement = createCard(item, '#template-сard');
+    cardList.addItem(cardElement, 'end');
+  },
+},
+  cardListSelector
+);
+
 api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
   .then((obj) => {
-    const cardList = new Section({
-      items: obj,
-      renderer: (item) => {
-        const cardElement = createCard(item, '#template-сard');
-        cardList.addItem(cardElement, 'end');
-      },
-    },
-      cardListSelector
-    );
+    cardList.items = obj;
     cardList.renderItems();
   })
   .catch((err) => console.log(err));
-// const cardList = new Section({
-//   items: initialCards,
-//   renderer: (item) => {
-//     const cardElement = createCard(item, '#template-сard');
-//     cardList.addItem(cardElement, 'end');
-//   },
-// },
-//   cardListSelector
-// );
-
-// cardList.renderItems();
 
 api.getUser()
   .then((obj) => {
@@ -77,6 +68,7 @@ function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();
   const cardElement = createCard({ name: placename, link: imgLink }, '#template-сard')
   cardList.addItem(cardElement, 'start');
+  api.addCard(placename, imgLink);
   popupAddCard.close();
 }
 

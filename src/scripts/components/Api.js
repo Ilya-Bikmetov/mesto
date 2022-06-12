@@ -52,5 +52,23 @@ export class Api {
       })
   }
 
+  addCard(name, link) {
+    const body = {
+      name: name,
+      link: link,
+    };
+
+    return fetch(this._urlCards, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok)
+          return res.json();
+
+        return Promise.reject(`Возникла ошибка ${res.status}`);
+      })
+  }
 
 }
