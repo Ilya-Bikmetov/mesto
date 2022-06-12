@@ -5,26 +5,17 @@ import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { Section } from "../scripts/components/Section.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
+import { Api } from "../scripts/components/Api.js";
 import {
   initialCards,
   formConfig,
+  token,
   buttonEditProfile,
   elementAddButton,
   profileEditForm,
   profileEditFormAdd,
   cardListSelector
 } from "../scripts/utils/constants.js";
-
-fetch('https://nomoreparties.co/v1/cohort-43/users/me', {
-  headers: {
-    'Authorization':'6c4179cf-c3ec-4b62-8222-3e29a4a7f86c',
-  },
-})
-  .then((res) => {
-    return res.json();
-  })
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
 
 const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign',);
 popupImage.setEventListeners();
@@ -46,8 +37,23 @@ const cardList = new Section({
 );
 
 cardList.renderItems();
+const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarSelector: '.profile__avatar' });
 
-const user = new UserInfo({ username: '.profile__title', info: '.profile__subtitle' });
+const userApi = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
+
+userApi.getUser()
+  .then((obj) => {
+    const currentUser = user.getUserInfo({ name: obj.name, info: obj.about, avatar: obj.avatar });
+    user.setUserInfo(obj.name, obj.about);
+
+    buttonEditProfile.addEventListener('click', () => {
+      popupProfile.setInputValues(currentUser);
+      popupProfile.open();
+      formEdit.resetFormFields();
+      formEdit.toggleSubmitButton();
+    })
+  })
+  .catch((err) => console.log(err));
 
 function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();
@@ -58,6 +64,7 @@ function handleAddCardForm(evt, { placename, imgLink }) {
 
 function submitEditFormHandler(evt, { jobInfo, username }) {
   evt.preventDefault();
+  userApi.addUser({ about: jobInfo, name: username });
   user.setUserInfo(username, jobInfo);
   popupProfile.close();
 }
@@ -70,14 +77,6 @@ function createCard(cardData, cardSelector) {
   const card = new Card(cardData, cardSelector, handleCardClick);
   return card.generateCard();
 }
-
-buttonEditProfile.addEventListener('click', () => {
-  const currentUser = user.getUserInfo();
-  popupProfile.setInputValues(currentUser);
-  popupProfile.open();
-  formEdit.resetFormFields();
-  formEdit.toggleSubmitButton();
-});
 
 elementAddButton.addEventListener('click', () => {
   popupAddCard.open();
