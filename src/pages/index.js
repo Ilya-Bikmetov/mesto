@@ -43,17 +43,22 @@ const userApi = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token)
 
 userApi.getUser()
   .then((obj) => {
-    const currentUser = user.getUserInfo({ name: obj.name, info: obj.about, avatar: obj.avatar });
     user.setUserInfo(obj.name, obj.about);
-
-    buttonEditProfile.addEventListener('click', () => {
-      popupProfile.setInputValues(currentUser);
-      popupProfile.open();
-      formEdit.resetFormFields();
-      formEdit.toggleSubmitButton();
-    })
   })
   .catch((err) => console.log(err));
+
+buttonEditProfile.addEventListener('click', () => {
+  userApi.getUser()
+  .then((obj) => {
+    const currentUser = user.getUserInfo(obj.name, obj.about, obj.avatar);
+    popupProfile.setInputValues(currentUser);
+  })
+  .catch((err) => console.log(err));
+  popupProfile.open();
+  formEdit.resetFormFields();
+  formEdit.toggleSubmitButton();
+})
+
 
 function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();

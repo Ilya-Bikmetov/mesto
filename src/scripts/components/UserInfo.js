@@ -5,12 +5,11 @@ export class UserInfo {
     this._userAvatar = document.querySelector(avatarSelector);
   }
 
-  getUserInfo({ name, info, avatar }) {
+  getUserInfo(name, info, avatar) {
     this._userName.textContent = name;
     this._userInfo.textContent = info;
     this._userAvatar.src = avatar;
     this._userAvatar.alt = name;
-
     this._user = { username: this._userName.textContent, jobInfo: this._userInfo.textContent };
     return this._user;
   }
@@ -18,6 +17,7 @@ export class UserInfo {
   setUserInfo(name, info) {
     this._userName.textContent = name;
     this._userInfo.textContent = info;
+
   }
 
 }
