@@ -3,6 +3,7 @@ import { Card } from "../scripts/components/Card.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
+import { PopupWithConfirmation } from "../scripts/components/PopupWithConfirmation.js";
 import { Section } from "../scripts/components/Section.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api.js";
@@ -17,6 +18,7 @@ import {
   cardListSelector
 } from "../scripts/utils/constants.js";
 
+
 const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign',);
 popupImage.setEventListeners();
 
@@ -25,6 +27,9 @@ popupProfile.setEventListeners();
 
 const popupAddCard = new PopupWithForm('.popup_place_add', handleAddCardForm);
 popupAddCard.setEventListeners();
+
+const popupDelCard = new PopupWithConfirmation('.popup_delete_card', 'confirm-delete-btn');
+popupDelCard.setEventListeners();
 
 const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarSelector: '.profile__avatar' });
 const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
@@ -66,7 +71,7 @@ buttonEditProfile.addEventListener('click', () => {
 
 function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();
-  const cardElement = createCard({ name: placename, link: imgLink }, '#template-сard')
+  const cardElement = createCard({ name: placename, link: imgLink, likes: [] }, '#template-сard')
   cardList.addItem(cardElement, 'start');
   api.addCard(placename, imgLink);
   popupAddCard.close();
@@ -84,7 +89,15 @@ function handleCardClick(link, name) {
 }
 
 function createCard(cardData, cardSelector) {
-  const card = new Card(cardData, cardSelector, handleCardClick);
+  const card = new Card(cardData, cardSelector, handleCardClick, {
+    deleteCard: (item) => {
+      popupDelCard.open();
+      popupDelCard.setSubmitHandler(() => {
+        card.deleteCard(item);
+        popupDelCard.close();
+      });
+    }
+  });
   return card.generateCard();
 }
 
