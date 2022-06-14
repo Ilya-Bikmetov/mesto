@@ -37,7 +37,9 @@ const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
 const cardList = new Section({
   items: {},
   renderer: (item) => {
-    const cardElement = createCard(item, '#template-сard');
+    const currentUser = user.getUserInfo();
+    const isOwner  = item.owner.name == currentUser.username ? true : false;
+    const cardElement = createCard(item, '#template-сard', isOwner);
     cardList.addItem(cardElement, 'end');
   },
 },
@@ -58,12 +60,8 @@ api.getUser()
   .catch((err) => console.log(err));
 
 buttonEditProfile.addEventListener('click', () => {
-  api.getUser()
-    .then((obj) => {
-      const currentUser = user.getUserInfo(obj.name, obj.about, obj.avatar);
-      popupProfile.setInputValues(currentUser);
-    })
-    .catch((err) => console.log(err));
+  const currentUser = user.getUserInfo();
+  popupProfile.setInputValues(currentUser);
   popupProfile.open();
   formEdit.resetFormFields();
   formEdit.toggleSubmitButton();
@@ -71,15 +69,17 @@ buttonEditProfile.addEventListener('click', () => {
 
 function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();
-  const cardElement = createCard({ name: placename, link: imgLink, likes: [] }, '#template-сard')
+  const cardElement = createCard({ name: placename, link: imgLink, likes: [] }, '#template-сard', true)
   cardList.addItem(cardElement, 'start');
-  api.addCard(placename, imgLink);
+  api.addCard(placename, imgLink)
+    .catch((err) => console.log(err));
   popupAddCard.close();
 }
 
 function submitEditFormHandler(evt, { jobInfo, username }) {
   evt.preventDefault();
-  api.addUser({ about: jobInfo, name: username });
+  api.addUser({ about: jobInfo, name: username })
+    .catch((err) => console.log(err));
   user.setUserInfo(username, jobInfo);
   popupProfile.close();
 }
@@ -88,15 +88,25 @@ function handleCardClick(link, name) {
   popupImage.open(link, name);
 }
 
-function createCard(cardData, cardSelector) {
+function createCard(cardData, cardSelector, isOwner) {
   const card = new Card(cardData, cardSelector, handleCardClick, {
-    deleteCard: (item) => {
+    deleteCard: (item, cardId) => {
       popupDelCard.open();
-      popupDelCard.setSubmitHandler(() => {
-        card.deleteCard(item);
-        popupDelCard.close();
+      popupDelCard.setSubmitHandler((evt) => {
+        evt.preventDefault();
+        api.deleteCard('https://mesto.nomoreparties.co/v1/cohortId/cards/', cardId)
+          .then((res) => {
+            if (res.ok) {
+              card.deleteCard(item);
+              popupDelCard.close();
+            }
+            else
+              return Promise.reject(`Возникла ошибка ${res.status}`);
+          })
+          .catch((err) => console.log(err));
       });
-    }
+    },
+    isOwner
   });
   return card.generateCard();
 }

@@ -1,11 +1,13 @@
 export class Card {
-  constructor({ name, link, likes }, cardSelector, handleCardClick, { deleteCard }) {
+  constructor({ name, link, likes, _id }, cardSelector, handleCardClick, { deleteCard, isOwner }) {
     this._name = name;
     this._link = link;
     this._amountLikes = likes.length;
     this._cardSelector = cardSelector;
     this._openCardClick = handleCardClick;
     this._confirmDeleteCard = deleteCard;
+    this._isOwner = isOwner;
+    this._cardId = _id;
   }
 
   generateCard() {
@@ -24,6 +26,10 @@ export class Card {
       this._amountLikesElement.textContent = this._amountLikes;
       this._amountLikesElement.classList.add('element__likes-amount_active');
     }
+    if (!this._isOwner) {
+      this._trashElement = this._cardElement.querySelector('.element__trash');
+      this._trashElement.remove();
+    }
     this._setEventListeners();
 
     return this._cardElement;
@@ -33,9 +39,10 @@ export class Card {
     this._cardElement.querySelector('.element__like').addEventListener('click', (evt) => {
       this._toggleLike(evt);
     });
-    this._cardElement.querySelector('.element__trash').addEventListener('click', () => {
-      this._confirmDeleteCard(this._cardElement);
-    });
+    if (this._isOwner)
+      this._cardElement.querySelector('.element__trash').addEventListener('click', () => {
+        this._confirmDeleteCard(this._cardElement, this._cardId);
+      });
     this._photo.addEventListener('click', () => this._openCardClick(this._link, this._name));
   }
 
@@ -52,4 +59,7 @@ export class Card {
     cardElement.remove();
   }
 
+  getCardId() {
+    return this._cardId;
+  }
 }

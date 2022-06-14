@@ -71,4 +71,21 @@ export class Api {
       })
   }
 
+  deleteCard(url, id) {
+    console.log(url);
+    console.log(id);
+    console.log(url + id);
+    return fetch(url + id, {
+      method: 'DELETE',
+      'Authorization': this._token,
+    })
+      // .then((res) => {
+      //   if (res.ok)
+      //     return res.json();
+
+      //   return Promise.reject(`Возникла ошибка ${res.status}`);
+      // })
+  }
+
+
 }
