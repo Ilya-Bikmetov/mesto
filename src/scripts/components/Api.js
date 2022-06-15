@@ -57,7 +57,6 @@ export class Api {
       name: name,
       link: link,
     };
-
     return fetch(this._urlCards, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -72,8 +71,7 @@ export class Api {
   }
 
   deleteCard(url, id) {
-    this._cardUrl = url + id;
-    return fetch(this._cardUrl, {
+    return fetch(url + id, {
       method: 'DELETE',
       headers: {
         'Authorization': this._token,
@@ -81,5 +79,22 @@ export class Api {
     })
   }
 
+  addLike(url) {
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': this._token,
+      }
+    })
+  }
+
+  deleteLike(url) {
+    return fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': this._token,
+      }
+    })
+  }
 
 }

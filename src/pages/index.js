@@ -8,7 +8,6 @@ import { Section } from "../scripts/components/Section.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api.js";
 import {
-  initialCards,
   formConfig,
   token,
   buttonEditProfile,
@@ -108,6 +107,34 @@ function createCard(cardData, cardSelector, isOwner) {
           })
           .catch((err) => console.log(err));
       });
+    },
+    addLike: (evt, cardId, likeAmountElement, amountLikes) => {
+      api.addLike('https://mesto.nomoreparties.co/v1/cohort-43/cards/' + `${cardId}` + '/likes')
+        .then((res) => {
+          if (res.ok) {
+            amountLikes++;
+            likeAmountElement.textContent = amountLikes;
+            card.toggleLike(evt, likeAmountElement, amountLikes);
+          }
+          else
+            return Promise.reject(`Возникла ошибка ${res.status}`);
+        })
+        .catch((err) => console.log(err));
+
+    },
+    delLike: (evt, cardId, likeAmountElement, amountLikes) => {
+      api.deleteLike('https://mesto.nomoreparties.co/v1/cohort-43/cards/' + `${cardId}` + '/likes')
+        .then((res) => {
+          if (res.ok) {
+            amountLikes--;
+            likeAmountElement.textContent = amountLikes;
+
+            card.toggleLike(evt, likeAmountElement, amountLikes);
+          }
+          else
+            return Promise.reject(`Возникла ошибка ${res.status}`);
+        })
+        .catch((err) => console.log(err));
     },
     isOwner
   });
