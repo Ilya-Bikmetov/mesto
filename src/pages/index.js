@@ -38,7 +38,7 @@ const cardList = new Section({
   items: {},
   renderer: (item) => {
     const currentUser = user.getUserInfo();
-    const isOwner  = item.owner.name == currentUser.username ? true : false;
+    const isOwner = item.owner.name == currentUser.username ? true : false;
     const cardElement = createCard(item, '#template-сard', isOwner);
     cardList.addItem(cardElement, 'end');
   },
@@ -69,10 +69,14 @@ buttonEditProfile.addEventListener('click', () => {
 
 function handleAddCardForm(evt, { placename, imgLink }) {
   evt.preventDefault();
-  const cardElement = createCard({ name: placename, link: imgLink, likes: [] }, '#template-сard', true)
-  cardList.addItem(cardElement, 'start');
   api.addCard(placename, imgLink)
+    .then((obj) => {
+
+      const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true)
+      cardList.addItem(cardElement, 'start');
+    })
     .catch((err) => console.log(err));
+
   popupAddCard.close();
 }
 

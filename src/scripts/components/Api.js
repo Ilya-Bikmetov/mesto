@@ -75,14 +75,10 @@ export class Api {
     this._cardUrl = url + id;
     return fetch(this._cardUrl, {
       method: 'DELETE',
-      'Authorization': this._token,
+      headers: {
+        'Authorization': this._token,
+      }
     })
-      // .then((res) => {
-      //   if (res.ok)
-      //     return res.json();
-
-      //   return Promise.reject(`Возникла ошибка ${res.status}`);
-      // })
   }
 
 

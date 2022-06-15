@@ -59,7 +59,4 @@ export class Card {
     cardElement.remove();
   }
 
-  getCardId() {
-    return this._cardId;
-  }
 }
