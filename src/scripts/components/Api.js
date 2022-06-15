@@ -72,8 +72,8 @@ export class Api {
   }
 
   deleteCard(url, id) {
-
-    return fetch(url + id, {
+    this._cardUrl = url + id;
+    return fetch(this._cardUrl, {
       method: 'DELETE',
       'Authorization': this._token,
     })

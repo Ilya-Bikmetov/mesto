@@ -28,7 +28,7 @@ popupProfile.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_place_add', handleAddCardForm);
 popupAddCard.setEventListeners();
 
-const popupDelCard = new PopupWithConfirmation('.popup_delete_card', 'confirm-delete-btn');
+const popupDelCard = new PopupWithConfirmation('.popup_delete_card');
 popupDelCard.setEventListeners();
 
 const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarSelector: '.profile__avatar' });
@@ -92,9 +92,8 @@ function createCard(cardData, cardSelector, isOwner) {
   const card = new Card(cardData, cardSelector, handleCardClick, {
     deleteCard: (item, cardId) => {
       popupDelCard.open();
-      popupDelCard.setSubmitHandler((evt) => {
-        evt.preventDefault();
-        api.deleteCard('https://mesto.nomoreparties.co/v1/cohortId/cards/', cardId)
+      popupDelCard.setSubmitHandler(() => {
+        api.deleteCard('https://mesto.nomoreparties.co/v1/cohort-43/cards/', cardId)
           .then((res) => {
             if (res.ok) {
               card.deleteCard(item);
