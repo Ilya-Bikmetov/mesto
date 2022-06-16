@@ -86,6 +86,12 @@ export class Api {
         'Authorization': this._token,
       }
     })
+    .then((res) => {
+      if (res.ok)
+        return res.json();
+
+      return Promise.reject(`Возникла ошибка ${res.status}`);
+    })
   }
 
   deleteLike(url) {
@@ -94,6 +100,12 @@ export class Api {
       headers: {
         'Authorization': this._token,
       }
+    })
+    .then((res) => {
+      if (res.ok)
+        return res.json();
+
+      return Promise.reject(`Возникла ошибка ${res.status}`);
     })
   }
 

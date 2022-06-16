@@ -38,7 +38,8 @@ const cardList = new Section({
   renderer: (item) => {
     const currentUser = user.getUserInfo();
     const isOwner = item.owner.name == currentUser.username ? true : false;
-    const cardElement = createCard(item, '#template-сard', isOwner);
+    const userSetLike = item.likes.some(item => item.name === currentUser.username);
+    const cardElement = createCard(item, '#template-сard', isOwner, userSetLike);
     cardList.addItem(cardElement, 'end');
   },
 },
@@ -71,7 +72,7 @@ function handleAddCardForm(evt, { placename, imgLink }) {
   api.addCard(placename, imgLink)
     .then((obj) => {
 
-      const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true)
+      const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true, false)
       cardList.addItem(cardElement, 'start');
     })
     .catch((err) => console.log(err));
@@ -91,7 +92,7 @@ function handleCardClick(link, name) {
   popupImage.open(link, name);
 }
 
-function createCard(cardData, cardSelector, isOwner) {
+function createCard(cardData, cardSelector, isOwner, cardHasLike) {
   const card = new Card(cardData, cardSelector, handleCardClick, {
     deleteCard: (item, cardId) => {
       popupDelCard.open();
@@ -108,35 +109,25 @@ function createCard(cardData, cardSelector, isOwner) {
           .catch((err) => console.log(err));
       });
     },
-    addLike: (evt, cardId, likeAmountElement, amountLikes) => {
+    addLike: (evt, cardId, likeAmountElement) => {
       api.addLike('https://mesto.nomoreparties.co/v1/cohort-43/cards/' + `${cardId}` + '/likes')
-        .then((res) => {
-          if (res.ok) {
-            amountLikes++;
-            likeAmountElement.textContent = amountLikes;
-            card.toggleLike(evt, likeAmountElement, amountLikes);
-          }
-          else
-            return Promise.reject(`Возникла ошибка ${res.status}`);
+        .then((obj) => {
+          likeAmountElement.textContent = obj.likes.length;
+          card.toggleLike(evt, likeAmountElement, obj.likes.length, 'like');
         })
         .catch((err) => console.log(err));
 
     },
-    delLike: (evt, cardId, likeAmountElement, amountLikes) => {
+    delLike: (evt, cardId, likeAmountElement) => {
       api.deleteLike('https://mesto.nomoreparties.co/v1/cohort-43/cards/' + `${cardId}` + '/likes')
-        .then((res) => {
-          if (res.ok) {
-            amountLikes--;
-            likeAmountElement.textContent = amountLikes;
-
-            card.toggleLike(evt, likeAmountElement, amountLikes);
-          }
-          else
-            return Promise.reject(`Возникла ошибка ${res.status}`);
+        .then((obj) => {
+          likeAmountElement.textContent = obj.likes.length;
+          card.toggleLike(evt, likeAmountElement, obj.likes.length, 'empty');
         })
         .catch((err) => console.log(err));
     },
-    isOwner
+    isOwner,
+    cardHasLike
   });
   return card.generateCard();
 }
