@@ -20,4 +20,5 @@ export const token = '6c4179cf-c3ec-4b62-8222-3e29a4a7f86c';
 export const popupImage = document.querySelector('.popup__img');
 export const popupImageSign = document.querySelector('.popup__img-sign');
 export const elementPopupImg = document.querySelector('.popup_place_img');
+export const avatarElement = document.querySelector('.profile__avatar');
 

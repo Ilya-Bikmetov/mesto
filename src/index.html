@@ -108,6 +108,25 @@
       </div>
     </div>
 
+    <div class="popup popup__avatar">
+      <form class="popup__content">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <button class="popup__close popup__close_form_img" type="button" aria-label="Закрыть"></button>
+        <div class="popup__field">
+          <input
+          id="url-input"
+          type="url"
+          name="imgLink"
+          class="popup__input popup__input_add-form_link"
+          placeholder="Ссылка на аватар"
+          required
+          >
+          <span id="url-input-error" class="popup__input-error">Введите адрес сайта.</span>
+        </div>
+        <button class="popup__btn" id="confirm-change-avatar-btn" type="submit" aria-label="Сохранить аватар">Сохранить</button>
+      </form>
+    </div>
+
     <div class="popup popup_delete_card">
       <form class="popup__content">
         <h2 class="popup__title">Вы уверены?</h2>
@@ -115,6 +134,7 @@
         <button class="popup__btn" id="confirm-delete-btn" type="submit" aria-label="Удалить картинку">Да</button>
       </form>
     </div>
+
 
   </div>
   <template id="template-сard">

@@ -4,10 +4,12 @@ import { FormValidator } from "../scripts/components/FormValidator.js";
 import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { PopupWithConfirmation } from "../scripts/components/PopupWithConfirmation.js";
+import { PopupWithAvatar } from "../scripts/components/PopupWithAvatar.js";
 import { Section } from "../scripts/components/Section.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api.js";
 import {
+  avatarElement,
   formConfig,
   token,
   buttonEditProfile,
@@ -30,7 +32,10 @@ popupAddCard.setEventListeners();
 const popupDelCard = new PopupWithConfirmation('.popup_delete_card');
 popupDelCard.setEventListeners();
 
-const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarSelector: '.profile__avatar' });
+const popupAvatar = new PopupWithAvatar('.popup__avatar', submitEditAvatarFormHandler);
+popupAvatar.setEventListeners();
+
+const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarElement });
 const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
 
 const cardList = new Section({
@@ -55,9 +60,15 @@ api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
 
 api.getUser()
   .then((obj) => {
-    user.setUserInfo(obj.name, obj.about);
+    user.setUserInfo(obj.name, obj.about, obj.avatar);
   })
   .catch((err) => console.log(err));
+
+  // api.getAvatar()
+//   .then((obj) => {
+
+//   })
+//   .catch((err) => console.log(err));
 
 buttonEditProfile.addEventListener('click', () => {
   const currentUser = user.getUserInfo();
@@ -78,6 +89,10 @@ function handleAddCardForm(evt, { placename, imgLink }) {
     .catch((err) => console.log(err));
 
   popupAddCard.close();
+}
+
+function submitEditAvatarFormHandler() {
+
 }
 
 function submitEditFormHandler(evt, { jobInfo, username }) {
@@ -138,8 +153,14 @@ elementAddButton.addEventListener('click', () => {
   formAdd.toggleSubmitButton();
 });
 
+avatarElement.addEventListener('click', () => {
+  popupAvatar.open();
+});
+
 const formEdit = new FormValidator(formConfig, profileEditForm);
 formEdit.enableValidation();
 
 const formAdd = new FormValidator(formConfig, profileEditFormAdd);
 formAdd.enableValidation();
+
+

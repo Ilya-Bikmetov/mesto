@@ -52,6 +52,20 @@ export class Api {
       })
   }
 
+  setAvatar(url) {
+    return fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok)
+          return res.json();
+
+        return Promise.reject(`Возникла ошибка ${res.status}`);
+      })
+  }
+
   addCard(name, link) {
     const body = {
       name: name,
@@ -86,12 +100,12 @@ export class Api {
         'Authorization': this._token,
       }
     })
-    .then((res) => {
-      if (res.ok)
-        return res.json();
+      .then((res) => {
+        if (res.ok)
+          return res.json();
 
-      return Promise.reject(`Возникла ошибка ${res.status}`);
-    })
+        return Promise.reject(`Возникла ошибка ${res.status}`);
+      })
   }
 
   deleteLike(url) {
@@ -101,12 +115,12 @@ export class Api {
         'Authorization': this._token,
       }
     })
-    .then((res) => {
-      if (res.ok)
-        return res.json();
+      .then((res) => {
+        if (res.ok)
+          return res.json();
 
-      return Promise.reject(`Возникла ошибка ${res.status}`);
-    })
+        return Promise.reject(`Возникла ошибка ${res.status}`);
+      })
   }
 
 }
