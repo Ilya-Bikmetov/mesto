@@ -19,7 +19,6 @@ import {
   cardListSelector
 } from "../scripts/utils/constants.js";
 
-
 const popupImage = new PopupWithImage('.popup_place_img', '.popup__img', '.popup__img-sign',);
 popupImage.setEventListeners();
 
@@ -44,7 +43,8 @@ formAdd.enableValidation();
 const formAvatar = new FormValidator(formConfig, profileEditAvatarForm);
 formAvatar.enableValidation();
 
-const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle', avatarElement });
+const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle' });
+
 const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
 
 const cardList = new Section({
@@ -60,7 +60,6 @@ const cardList = new Section({
   cardListSelector
 );
 
-
 api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
   .then((obj) => {
     cardList.items = obj;
@@ -70,12 +69,14 @@ api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
 
 api.getUser()
   .then((obj) => {
-    user.setUserInfo(obj.name, obj.about, obj.avatar);
+    user.setUserInfo(obj.name, obj.about);
+    avatarElement.src = obj.avatar;
   })
   .catch((err) => console.log(err));
 
-function handleAddCardForm(evt, { placename, imgLink }) {
+function handleAddCardForm(evt, { placename, imgLink }, { buttonElement, buttonText }) {
   evt.preventDefault();
+  buttonElement.textContent = 'Сохранение...'
   api.addCard(placename, imgLink)
     .then((obj) => {
 
@@ -85,24 +86,29 @@ function handleAddCardForm(evt, { placename, imgLink }) {
     .catch((err) => console.log(err));
 
   popupAddCard.close();
+  setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
 
-function submitEditAvatarFormHandler(evt, { avatarLink }) {
+function submitEditAvatarFormHandler(evt, { avatarLink }, { buttonElement, buttonText }) {
   evt.preventDefault();
+  buttonElement.textContent = 'Сохранение...'
   api.setAvatar('https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar', avatarLink)
     .then((obj) => {
       avatarElement.src = obj.avatar;
     })
     .catch((err) => console.log(err));
   popupAvatar.close();
+  setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
 
-function submitEditFormHandler(evt, { jobInfo, username }) {
+function submitEditFormHandler(evt, { jobInfo, username }, { buttonElement, buttonText }) {
   evt.preventDefault();
+  buttonElement.textContent = 'Сохранение...'
   api.addUser({ about: jobInfo, name: username })
     .catch((err) => console.log(err));
   user.setUserInfo(username, jobInfo);
   popupProfile.close();
+  setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
 
 function handleCardClick(link, name) {
