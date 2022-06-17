@@ -52,7 +52,10 @@ export class Api {
       })
   }
 
-  setAvatar(url) {
+  setAvatar(url, urlAvatar) {
+    const body = {
+      avatar: urlAvatar
+    }
     return fetch(url, {
       method: 'PATCH',
       body: JSON.stringify(body),
