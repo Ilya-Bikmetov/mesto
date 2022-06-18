@@ -63,7 +63,7 @@ const cardList = new Section({
 api.getUser()
   .then((obj) => {
     user.setUserInfo(obj.name, obj.about);
-    avatarElement.src = obj.avatar;
+    avatarElement.style.backgroundImage = `url(${obj.avatar})`;
   })
   .catch((err) => console.log(err));
 
@@ -94,7 +94,7 @@ function submitEditAvatarFormHandler(evt, { avatarLink }) {
   popupAvatar.changeSubmitBtnActionName('Сохранение...');
   api.setAvatar('https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar', avatarLink)
     .then((obj) => {
-      avatarElement.src = obj.avatar;
+      avatarElement.style.backgroundImage = `url(${obj.avatar})`;
     })
     .catch((err) => console.log(err));
   popupAvatar.close();
@@ -132,7 +132,7 @@ function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
       });
     },
     addLike: (evt, cardId, likeAmountElement) => {
-      api.addLike('https://mesto.nomoreparties.co/v1/cohort-43/cards/' + `${cardId}` + '/likes')
+      api.addLike(`https://mesto.nomoreparties.co/v1/cohort-43/cards/${cardId}/likes`)
         .then((obj) => {
           likeAmountElement.textContent = obj.likes.length;
           card.toggleLike(evt, likeAmountElement, obj.likes.length, 'like');
@@ -141,7 +141,7 @@ function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
 
     },
     delLike: (evt, cardId, likeAmountElement) => {
-      api.deleteLike('https://mesto.nomoreparties.co/v1/cohort-43/cards/' + `${cardId}` + '/likes')
+      api.deleteLike(`https://mesto.nomoreparties.co/v1/cohort-43/cards/${cardId}/likes`)
         .then((obj) => {
           likeAmountElement.textContent = obj.likes.length;
           card.toggleLike(evt, likeAmountElement, obj.likes.length, 'empty');
