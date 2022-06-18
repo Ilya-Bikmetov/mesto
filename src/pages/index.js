@@ -28,7 +28,7 @@ popupProfile.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_place_add', submitAddCardFormHandler);
 popupAddCard.setEventListeners();
 
-const popupAvatar = new PopupWithForm('.popup__avatar', submitEditAvatarFormHandler);
+const popupAvatar = new PopupWithForm('.popup_avatar', submitEditAvatarFormHandler);
 popupAvatar.setEventListeners();
 
 const popupDelCard = new PopupWithConfirmation('.popup_delete_card');
