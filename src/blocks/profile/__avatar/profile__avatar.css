@@ -3,7 +3,6 @@
   max-width: 120px;
   max-height: 120px;
   object-fit: cover;
-  margin-right: 30px;
   border-radius: 50%;
   transition: opacity .5s ease-in-out;
 }
@@ -11,11 +10,5 @@
 .profile__avatar:hover {
   opacity: .6;
   cursor: pointer;
-}
-
-@media (max-width: 599px) {
-  .profile__avatar {
-    margin-right: 0;
-    margin-bottom: 27px;
-  }
+  z-index: 3;
 }

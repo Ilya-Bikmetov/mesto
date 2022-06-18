@@ -28,11 +28,11 @@ popupProfile.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_place_add', submitAddCardFormHandler);
 popupAddCard.setEventListeners();
 
-const popupDelCard = new PopupWithConfirmation('.popup_delete_card');
-popupDelCard.setEventListeners();
-
 const popupAvatar = new PopupWithForm('.popup__avatar', submitEditAvatarFormHandler);
 popupAvatar.setEventListeners();
+
+const popupDelCard = new PopupWithConfirmation('.popup_delete_card');
+popupDelCard.setEventListeners();
 
 const formEdit = new FormValidator(formConfig, profileEditForm);
 formEdit.enableValidation();
@@ -77,9 +77,9 @@ Promise.all([api.getUser()])
       .catch((err) => console.log(err));
   })
 
-function submitAddCardFormHandler(evt, { placename, imgLink }, { buttonElement, buttonText }) {
+function submitAddCardFormHandler(evt, { placename, imgLink }) {
   evt.preventDefault();
-  buttonElement.textContent = 'Сохранение...'
+  popupAddCard.changeSubmitBtnActionName('Сохранение...');
   api.addCard(placename, imgLink)
     .then((obj) => {
       const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true, false)
@@ -87,29 +87,26 @@ function submitAddCardFormHandler(evt, { placename, imgLink }, { buttonElement, 
     })
     .catch((err) => console.log(err));
   popupAddCard.close();
-  setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
 
-function submitEditAvatarFormHandler(evt, { avatarLink }, { buttonElement, buttonText }) {
+function submitEditAvatarFormHandler(evt, { avatarLink }) {
   evt.preventDefault();
-  buttonElement.textContent = 'Сохранение...'
+  popupAvatar.changeSubmitBtnActionName('Сохранение...');
   api.setAvatar('https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar', avatarLink)
     .then((obj) => {
       avatarElement.src = obj.avatar;
     })
     .catch((err) => console.log(err));
   popupAvatar.close();
-  setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
 
-function submitEditFormHandler(evt, { jobInfo, username }, { buttonElement, buttonText }) {
+function submitEditFormHandler(evt, { jobInfo, username }) {
   evt.preventDefault();
-  buttonElement.textContent = 'Сохранение...'
+  popupProfile.changeSubmitBtnActionName('Сохранение...');
   api.addUser({ about: jobInfo, name: username })
     .catch((err) => console.log(err));
   user.setUserInfo(username, jobInfo);
   popupProfile.close();
-  setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
 
 function handleCardClick(link, name) {
@@ -121,6 +118,7 @@ function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
     deleteCard: (item, cardId) => {
       popupDelCard.open();
       popupDelCard.setSubmitHandler(() => {
+        popupDelCard.changeSubmitBtnActionName('Удаление...');
         api.deleteCard('https://mesto.nomoreparties.co/v1/cohort-43/cards/', cardId)
           .then((res) => {
             if (res.ok) {

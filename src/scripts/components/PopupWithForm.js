@@ -19,11 +19,9 @@ export class PopupWithForm extends Popup {
   setEventListeners() {
     super.setEventListeners();
     this._formElement = this._popupElement.querySelector('.popup__content');
-    this._submitButtonElement = this._formElement.querySelector('.popup__btn');
     this._formElement.addEventListener('submit', (evt) => this._submitFormHandler(
       evt,
       this._getInputValues(),
-      { buttonElement: this._submitButtonElement, buttonText: this._submitButtonElement.textContent }
     ));
   }
 
@@ -38,4 +36,10 @@ export class PopupWithForm extends Popup {
     super.close();
   }
 
+  changeSubmitBtnActionName(message) {
+    this._submitButtonElement = this._formElement.querySelector('.popup__btn');
+    this._submitButtonDefaultName = this._submitButtonElement.textContent;
+    this._submitButtonElement.textContent = message;
+    setTimeout(() => this._submitButtonElement.textContent = this._submitButtonDefaultName, 1000);
+  }
 }
