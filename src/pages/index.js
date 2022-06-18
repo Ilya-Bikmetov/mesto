@@ -25,7 +25,7 @@ popupImage.setEventListeners();
 const popupProfile = new PopupWithForm('.popup_place_edit', submitEditFormHandler);
 popupProfile.setEventListeners();
 
-const popupAddCard = new PopupWithForm('.popup_place_add', handleAddCardForm);
+const popupAddCard = new PopupWithForm('.popup_place_add', submitAddCardFormHandler);
 popupAddCard.setEventListeners();
 
 const popupDelCard = new PopupWithConfirmation('.popup_delete_card');
@@ -51,21 +51,14 @@ const cardList = new Section({
   items: {},
   renderer: (item) => {
     const currentUser = user.getUserInfo();
-    const isOwner = item.owner.name === currentUser.username ? true : false;
+    const cardOwner = item.owner.name === currentUser.username ? true : false;
     const userSetLike = item.likes.some(item => item.name === currentUser.username);
-    const cardElement = createCard(item, '#template-сard', isOwner, userSetLike);
+    const cardElement = createCard(item, '#template-сard', cardOwner, userSetLike);
     cardList.addItem(cardElement, 'end');
   },
 },
   cardListSelector
 );
-
-api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
-  .then((obj) => {
-    cardList.items = obj;
-    cardList.renderItems();
-  })
-  .catch((err) => console.log(err));
 
 api.getUser()
   .then((obj) => {
@@ -74,17 +67,25 @@ api.getUser()
   })
   .catch((err) => console.log(err));
 
-function handleAddCardForm(evt, { placename, imgLink }, { buttonElement, buttonText }) {
+Promise.all([api.getUser()])
+  .then(() => {
+    api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
+      .then((obj) => {
+        cardList.items = obj;
+        cardList.renderItems();
+      })
+      .catch((err) => console.log(err));
+  })
+
+function submitAddCardFormHandler(evt, { placename, imgLink }, { buttonElement, buttonText }) {
   evt.preventDefault();
   buttonElement.textContent = 'Сохранение...'
   api.addCard(placename, imgLink)
     .then((obj) => {
-
       const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true, false)
       cardList.addItem(cardElement, 'start');
     })
     .catch((err) => console.log(err));
-
   popupAddCard.close();
   setTimeout(() => buttonElement.textContent = buttonText, 1000);
 }
@@ -115,7 +116,7 @@ function handleCardClick(link, name) {
   popupImage.open(link, name);
 }
 
-function createCard(cardData, cardSelector, isOwner, cardHasLike) {
+function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
   const card = new Card(cardData, cardSelector, handleCardClick, {
     deleteCard: (item, cardId) => {
       popupDelCard.open();
@@ -149,7 +150,7 @@ function createCard(cardData, cardSelector, isOwner, cardHasLike) {
         })
         .catch((err) => console.log(err));
     },
-    isOwner,
+    cardOwner,
     cardHasLike
   });
   return card.generateCard();

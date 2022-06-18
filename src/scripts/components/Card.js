@@ -1,5 +1,5 @@
 export class Card {
-  constructor({ name, link, likes, _id }, cardSelector, handleCardClick, { deleteCard, addLike, delLike, isOwner, cardHasLike }) {
+  constructor({ name, link, likes, _id }, cardSelector, handleCardClick, { deleteCard, addLike, delLike, cardOwner, cardHasLike }) {
     this._name = name;
     this._link = link;
     this._amountLikes = likes.length;
@@ -8,7 +8,7 @@ export class Card {
     this._confirmDeleteCard = deleteCard;
     this._addLike = addLike;
     this._delLike = delLike;
-    this._isOwner = isOwner;
+    this._cardOwner = cardOwner;
     this._cardId = _id;
     this._cardLiked = cardHasLike;
   }
@@ -30,7 +30,7 @@ export class Card {
     if (this._amountLikes !== 0) {
       this._amountLikesElement.classList.add('element__likes-amount_active');
     }
-    if (!this._isOwner)
+    if (!this._cardOwner)
       this._cardElement.querySelector('.element__trash').remove();
 
     if (this._cardLiked)
@@ -50,7 +50,7 @@ export class Card {
         this._delLike(evt, this._cardId, this._amountLikesElement);
       }
     });
-    if (this._isOwner)
+    if (this._cardOwner)
       this._cardElement.querySelector('.element__trash').addEventListener('click', () => {
         this._confirmDeleteCard(this._cardElement, this._cardId);
       });
