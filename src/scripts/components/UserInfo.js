@@ -5,11 +5,25 @@ export class UserInfo {
   }
 
   getUserInfo() {
-    this._user = { username: this._userName.textContent, jobInfo: this._userInfo.textContent };
+    this._user = {
+      username: this._userName.textContent,
+      jobInfo: this._userInfo.textContent,
+      avatar: this._avatar,
+      id: this._userId,
+      avatarElement: this._avatarElement
+    };
     return this._user;
   }
 
-  setUserInfo(name, info) {
+  setUserInfo({ name, info, avatar, avatarElement, id }) {
+    this.changeUserInfo({ name, info });
+    this._userId = id;
+    this._avatar = `url(${avatar})`;
+    this._avatarElement = avatarElement;
+    this._avatarElement.style.backgroundImage = this._avatar;
+  }
+
+  changeUserInfo({ name, info }) {
     this._userName.textContent = name;
     this._userInfo.textContent = info;
   }

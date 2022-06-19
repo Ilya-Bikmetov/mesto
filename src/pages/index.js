@@ -8,9 +8,10 @@ import { Section } from "../scripts/components/Section.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api.js";
 import {
+  currentUser,
   avatarElement,
+  apiConfig,
   formConfig,
-  token,
   buttonEditProfile,
   elementAddButton,
   profileEditForm,
@@ -45,7 +46,7 @@ formAvatar.enableValidation();
 
 const user = new UserInfo({ usernameSelector: '.profile__title', infoSelector: '.profile__subtitle' });
 
-const api = new Api('https://nomoreparties.co/v1/cohort-43/users/me', token);
+const api = new Api(apiConfig);
 
 const cardList = new Section({
   items: {},
@@ -60,53 +61,65 @@ const cardList = new Section({
   cardListSelector
 );
 
-api.getUser()
+api.getUser('users/me')
   .then((obj) => {
-    user.setUserInfo(obj.name, obj.about);
-    avatarElement.style.backgroundImage = `url(${obj.avatar})`;
+    user.setUserInfo({ name: obj.name, info: obj.about, id: obj._id, avatar: obj.avatar, avatarElement });
   })
   .catch((err) => console.log(err));
 
-Promise.all([api.getUser()])
-  .then(() => {
-    api.getInitialCards('https://mesto.nomoreparties.co/v1/cohort-43/cards')
-      .then((obj) => {
-        cardList.items = obj;
-        cardList.renderItems();
-      })
-      .catch((err) => console.log(err));
+
+api.getInitialCards('cards')
+  .then((obj) => {
+    cardList.items = obj;
+    cardList.renderItems();
   })
+  .catch((err) => console.log(err));
+// Promise.all([api.getUser()])
+//   .then(() => {
+//     api.getInitialCards('cards')
+//       .then((obj) => {
+//         cardList.items = obj;
+//         cardList.renderItems();
+//       })
+//       .catch((err) => console.log(err));
+//   })
 
 function submitAddCardFormHandler(evt, { placename, imgLink }) {
   evt.preventDefault();
   popupAddCard.changeSubmitBtnActionName('Сохранение...');
-  api.addCard(placename, imgLink)
+  api.addCard(placename, imgLink, 'cards')
+    .finally(() => popupAddCard.setSubmitBtnTimer())
     .then((obj) => {
       const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true, false)
       cardList.addItem(cardElement, 'start');
+      popupAddCard.close();
     })
     .catch((err) => console.log(err));
-  popupAddCard.close();
 }
 
 function submitEditAvatarFormHandler(evt, { avatarLink }) {
   evt.preventDefault();
-  popupAvatar.changeSubmitBtnActionName('Сохранение...');
-  api.setAvatar('https://mesto.nomoreparties.co/v1/cohort-43/users/me/avatar', avatarLink)
+  popupAvatar.changeSubmitBtnActionName('Сохранение...')
+  api.setAvatar('users/me/avatar', avatarLink)
+    .finally(() => popupAvatar.setSubmitBtnTimer())
     .then((obj) => {
       avatarElement.style.backgroundImage = `url(${obj.avatar})`;
+      popupAvatar.close();
     })
     .catch((err) => console.log(err));
-  popupAvatar.close();
 }
 
 function submitEditFormHandler(evt, { jobInfo, username }) {
   evt.preventDefault();
-  popupProfile.changeSubmitBtnActionName('Сохранение...');
-  api.addUser({ about: jobInfo, name: username })
+  popupProfile.changeSubmitBtnActionName('Сохранение...')
+  api.addUser({ about: jobInfo, name: username }, 'users/me')
+    .finally(() => popupProfile.setSubmitBtnTimer())
+    .then(() => {
+      user.changeUserInfo({ name: username, info: jobInfo });
+      popupProfile.close();
+    })
     .catch((err) => console.log(err));
-  user.setUserInfo(username, jobInfo);
-  popupProfile.close();
+
 }
 
 function handleCardClick(link, name) {
@@ -119,20 +132,17 @@ function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
       popupDelCard.open();
       popupDelCard.setSubmitHandler(() => {
         popupDelCard.changeSubmitBtnActionName('Удаление...');
-        api.deleteCard('https://mesto.nomoreparties.co/v1/cohort-43/cards/', cardId)
-          .then((res) => {
-            if (res.ok) {
-              card.deleteCard(item);
-              popupDelCard.close();
-            }
-            else
-              return Promise.reject(`Возникла ошибка ${res.status}`);
+        api.deleteCard(`cards/${cardId}`)
+          .finally(() => popupDelCard.setSubmitBtnTimer())
+          .then(() => {
+            card.deleteCard(item);
+            popupDelCard.close();
           })
           .catch((err) => console.log(err));
       });
     },
     addLike: (evt, cardId, likeAmountElement) => {
-      api.addLike(`https://mesto.nomoreparties.co/v1/cohort-43/cards/${cardId}/likes`)
+      api.addLike(`cards/${cardId}/likes`)
         .then((obj) => {
           likeAmountElement.textContent = obj.likes.length;
           card.toggleLike(evt, likeAmountElement, obj.likes.length, 'like');
@@ -141,7 +151,7 @@ function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
 
     },
     delLike: (evt, cardId, likeAmountElement) => {
-      api.deleteLike(`https://mesto.nomoreparties.co/v1/cohort-43/cards/${cardId}/likes`)
+      api.deleteLike(`cards/${cardId}/likes`)
         .then((obj) => {
           likeAmountElement.textContent = obj.likes.length;
           card.toggleLike(evt, likeAmountElement, obj.likes.length, 'empty');
