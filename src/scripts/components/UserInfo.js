@@ -9,7 +9,7 @@ export class UserInfo {
       username: this._userName.textContent,
       jobInfo: this._userInfo.textContent,
       avatar: this._avatar,
-      id: this._userId,
+      id: this.userId,
       avatarElement: this._avatarElement
     };
     return this._user;
@@ -17,7 +17,7 @@ export class UserInfo {
 
   setUserInfo({ name, info, avatar, avatarElement, id }) {
     this.changeUserInfo({ name, info });
-    this._userId = id;
+    this.userId = id;
     this._avatar = `url(${avatar})`;
     this._avatarElement = avatarElement;
     this._avatarElement.style.backgroundImage = this._avatar;
@@ -28,4 +28,7 @@ export class UserInfo {
     this._userInfo.textContent = info;
   }
 
+  changeAvatar(url) {
+    this._avatarElement.style.backgroundImage = `url(${url})`;
+  }
 }

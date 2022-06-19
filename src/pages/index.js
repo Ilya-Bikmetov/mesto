@@ -8,7 +8,6 @@ import { Section } from "../scripts/components/Section.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api.js";
 import {
-  currentUser,
   avatarElement,
   apiConfig,
   formConfig,
@@ -51,9 +50,8 @@ const api = new Api(apiConfig);
 const cardList = new Section({
   items: {},
   renderer: (item) => {
-    const currentUser = user.getUserInfo();
-    const cardOwner = item.owner.name === currentUser.username ? true : false;
-    const userSetLike = item.likes.some(item => item.name === currentUser.username);
+    const cardOwner = item.owner._id === user.userId ? true : false;
+    const userSetLike = item.likes.some(item => item._id === user.userId);
     const cardElement = createCard(item, '#template-сard', cardOwner, userSetLike);
     cardList.addItem(cardElement, 'end');
   },
@@ -61,65 +59,49 @@ const cardList = new Section({
   cardListSelector
 );
 
-api.getUser('users/me')
-  .then((obj) => {
-    user.setUserInfo({ name: obj.name, info: obj.about, id: obj._id, avatar: obj.avatar, avatarElement });
-  })
-  .catch((err) => console.log(err));
-
-
-api.getInitialCards('cards')
-  .then((obj) => {
-    cardList.items = obj;
+Promise.all([api.getUser('users/me'), api.getInitialCards('cards')])
+  .then(([userData, cards]) => {
+    user.setUserInfo({ name: userData.name, info: userData.about, id: userData._id, avatar: userData.avatar, avatarElement });
+    cardList.items = cards;
     cardList.renderItems();
   })
   .catch((err) => console.log(err));
-// Promise.all([api.getUser()])
-//   .then(() => {
-//     api.getInitialCards('cards')
-//       .then((obj) => {
-//         cardList.items = obj;
-//         cardList.renderItems();
-//       })
-//       .catch((err) => console.log(err));
-//   })
 
 function submitAddCardFormHandler(evt, { placename, imgLink }) {
   evt.preventDefault();
   popupAddCard.changeSubmitBtnActionName('Сохранение...');
   api.addCard(placename, imgLink, 'cards')
-    .finally(() => popupAddCard.setSubmitBtnTimer())
     .then((obj) => {
       const cardElement = createCard({ name: placename, link: imgLink, likes: obj.likes, _id: obj._id }, '#template-сard', true, false)
       cardList.addItem(cardElement, 'start');
       popupAddCard.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => popupAddCard.setSubmitBtnTimer());
 }
 
 function submitEditAvatarFormHandler(evt, { avatarLink }) {
   evt.preventDefault();
   popupAvatar.changeSubmitBtnActionName('Сохранение...')
   api.setAvatar('users/me/avatar', avatarLink)
-    .finally(() => popupAvatar.setSubmitBtnTimer())
     .then((obj) => {
-      avatarElement.style.backgroundImage = `url(${obj.avatar})`;
+      user.changeAvatar(obj.avatar);
       popupAvatar.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => popupAvatar.setSubmitBtnTimer());
 }
 
 function submitEditFormHandler(evt, { jobInfo, username }) {
   evt.preventDefault();
   popupProfile.changeSubmitBtnActionName('Сохранение...')
   api.addUser({ about: jobInfo, name: username }, 'users/me')
-    .finally(() => popupProfile.setSubmitBtnTimer())
     .then(() => {
       user.changeUserInfo({ name: username, info: jobInfo });
       popupProfile.close();
     })
-    .catch((err) => console.log(err));
-
+    .catch((err) => console.log(err))
+    .finally(() => popupProfile.setSubmitBtnTimer());
 }
 
 function handleCardClick(link, name) {
@@ -133,12 +115,12 @@ function createCard(cardData, cardSelector, cardOwner, cardHasLike) {
       popupDelCard.setSubmitHandler(() => {
         popupDelCard.changeSubmitBtnActionName('Удаление...');
         api.deleteCard(`cards/${cardId}`)
-          .finally(() => popupDelCard.setSubmitBtnTimer())
           .then(() => {
             card.deleteCard(item);
             popupDelCard.close();
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err))
+          .finally(() => popupDelCard.setSubmitBtnTimer());
       });
     },
     addLike: (evt, cardId, likeAmountElement) => {

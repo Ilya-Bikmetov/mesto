@@ -28,5 +28,3 @@ export const popupImage = document.querySelector('.popup__img');
 export const popupImageSign = document.querySelector('.popup__img-sign');
 export const elementPopupImg = document.querySelector('.popup_place_img');
 export const avatarElement = document.querySelector('.profile__avatar');
-export const currentUser = {};
-
